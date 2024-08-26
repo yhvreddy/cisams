@@ -83,7 +83,7 @@
                 </thead>
                 <tbody class="wht-box ">
                     <tr>
-                        <td data-label="S.No"><img src="{{ asset('assets/images/blue1.png') }}" class="blu"> Complaints
+                        <td data-label="S.No"><img src="{{ url('assets/images/blue1.png') }}" class="blu"> Complaints
                         </td>
                         <td data-label="NCRP NO">150</td>
                         <td data-label="DATE Of REPORT">45</td>
@@ -93,7 +93,7 @@
 
                     </tr>
                     <tr>
-                        <td data-label="S.No"><img src="{{ asset('assets/images/blue2.png') }}" class="blu1"> Fir
+                        <td data-label="S.No"><img src="{{ url('assets/images/blue2.png') }}" class="blu1"> Fir
                             Conversion</td>
                         <td data-label="NCRP NO">35</td>
                         <td data-label="DATE Of REPORT">55</td>
@@ -104,7 +104,7 @@
                     </tr>
 
                     <tr>
-                        <td data-label="S.No"><img src="{{ asset('assets/images/blue3.png') }}" class="blu">Fir Pending
+                        <td data-label="S.No"><img src="{{ url('assets/images/blue3.png') }}" class="blu">Fir Pending
                         </td>
                         <td data-label="NCRP NO">65</td>
                         <td data-label="DATE Of REPORT">35</td>

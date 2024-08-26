@@ -1,21 +1,21 @@
 <header>
     <nav class="navbar">
 
-        <a href="{{ route('home') }}"><img src="{{ asset('assets/images/logo.png') }}"></a>
+        <a href="{{ route('home') }}"><img src="{{ url('assets/images/logo.png') }}"></a>
         <span class="nv-text">Cybercrime Investigation Support, Analysis and Monitoring System</span>
 
         <ul class="navbar-menu " id="navbar-menu">
             <li class="navbar-item">
-                <a class="navbar-link" href="#"><img src="{{ asset('assets/images/bell.svg') }}" class="icon"></a>
+                <a class="navbar-link" href="#"><img src="{{ url('assets/images/bell.svg') }}" class="icon"></a>
             </li>
 
             <li class="navbar-item">
-                <a class="navbar-link" href="#"><img src="{{ asset('assets/images/sett.svg') }}"
+                <a class="navbar-link" href="#"><img src="{{ url('assets/images/sett.svg') }}"
                         class="icon"></a>
             </li>
 
             <li class="navbar-item">
-                <a class="navbar-link" href="#"><img src="{{ asset('assets/images/pro-img.png') }}"
+                <a class="navbar-link" href="#"><img src="{{ url('assets/images/pro-img.png') }}"
                         class="profile"></a>
             </li>
 
@@ -40,5 +40,5 @@
 
 
 <div class="hamburger" id="hamburger-menu">
-    <img src="{{ asset('assets/images/menu_icon.jpg') }}" alt="Menu">
+    <img src="{{ url('assets/images/menu_icon.jpg') }}" alt="Menu">
 </div>
