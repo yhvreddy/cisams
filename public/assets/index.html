@@ -16,9 +16,150 @@
   
  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-   
+    <style>
+        #myNewChartContainer {
+        
+            height: 280px;
+            position: relative;
+        }
+        #myNewChart {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+
+        <style>
+        .chart-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          
+            height: 240px;
+        }
+        #mainChartNIK {
+            width: 160px;
+            height: 160px;
+        }
+        .small-chart-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 160px;
+        }
+        #financialChartNIK, #nonFinancialChartNIK {
+            width: 60px;
+            height: 60px;
+        }
+        .legend-container {
+            display: flex;
+            justify-content: space-between;
+            width: 320px;
+            margin-top: 10px;
+        }
+        .legend {
+            display: flex;
+            align-items: center;
+        }
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        .financial-color {
+            background-color: #002F8A;
+        }
+        .nonFinancial-color {
+            background-color: #3E77FF;
+        }
+    </style>
+    
 
 
+<style>
+
+	.chart {
+  	width:340px !important;
+  	height: 280px !important;
+	}
+
+	.box{
+  /*width:360px !important;*/
+  height: 340px !important;
+  background-color: #fff;
+  padding: 10px;
+  margin-top:15px;
+  border-radius:8px;
+	}
+
+	@media screen and (max-width: 1440px) {
+.chart {
+  	width:320px !important;
+  	height: 280px !important;
+	}
+
+	.box{
+  /*width:320px !important;
+  height: 320px !important;*/
+  background-color: #fff;
+  padding: 10px;
+  margin-top:15px;
+  border-radius:8px;
+	}
+
+}
+
+
+
+@media screen and (min-width: 1366px) {
+.chart {
+  	width:320px !important;
+  	height: 280px !important;
+	}
+
+	.box{
+  /*width:320px !important;
+  height: 320px !important;*/
+  background-color: #fff;
+  padding: 10px;
+  margin-top:15px;
+  border-radius:8px;
+	}
+
+}
+
+
+@media screen and (min-width: 1920px) {
+
+	.chart {
+  	width:320px !important;
+  	height: 280px !important;
+	}
+
+	.box{
+  /*width:320px !important;
+  height: 300px !important;*/
+  background-color: #fff;
+  padding: 10px;
+  margin-top:15px;
+  border-radius:8px;
+	}
+
+}
+
+@media (min-width: 1200px) {
+    .col-md-4 {
+        flex: 0 0 auto;
+        width: 33.33333333%;
+        width: calc(33.33333333% - 20px);
+    }
+    .new-container{
+        max-width: 100%;
+    }
+}
+
+
+</style>
 
 </head>
 <body>
@@ -142,7 +283,7 @@
 
 <!-- GRAPHS -->
   <div class="content">
-    <div class="container ">
+    <div class="container new-container">
       <div class="row">
         <div class="col-md-4 box ">
         	<h5 class="titl">NCRP Complaints</h5>    
