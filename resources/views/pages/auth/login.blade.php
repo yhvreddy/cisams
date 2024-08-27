@@ -8,10 +8,10 @@
 @section('content')
     <div class="login-box">
         <img src="{{ url('assets/images/logo.png') }}" alt="CISAMS Logo">
-        <h1 class="login-title">LOGIN</h1>
-        <p class="login-subtitle mb-4">Cybercrime Investigation Support, Analysis and Monitoring System</p>
+        {{-- <h1 class="login-title">LOGIN</h1> --}}
+        <p class="login-subtitle mb-3 mt-3">Cybercrime Investigation Support, Analysis and Monitoring System</p>
 
-        <form action="{{ route('login.access') }}" method="post">
+        <form action="{{ route('login.access') }}" class="mt-3" method="post">
             @csrf
 
             <div class="input-group">
