@@ -40,22 +40,28 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
             Route::get('/pe-fir-cdr', 'CaseStatusController@peFirCdr')->name('pe-fir-cdr');
         });
 
-        Route::prefix('fir-conversions')->name('fir-conversions.')->group(function () {
-            Route::prefix('complaints')->group(function () {
-                Route::get('/', 'FIRConversionsController@index')->name('complaints');
+        Route::prefix('total-complaints')->name('fir-conversions.')->group(function () {
+            Route::get('/', 'FIRConversionsController@index')->name('complaints');
+
+            Route::get('/fir-conversions-yes', 'FIRConversionsController@tcYes')->name('tc-yes');
+            Route::prefix('fir-conversions')->group(function () {
+                Route::get('/refund-order-pending', 'FIRConversionsController@roPending')->name('ro-pending');
+                Route::get('/fir-update', 'FIRConversionsController@ufUpdate')->name('uf-update');
+                Route::get('/refund-update', 'FIRConversionsController@urUpdate')->name('ur-update');
+
+                Route::get('/evidence-gathered-no', 'FIRConversionsController@evNo')->name('ev-no');
+                Route::prefix('evidence-gathered')->group(function () {
+                    Route::get('/whatsapp-pending', 'FIRConversionsController@whatsAppPending')->name('whatsapp-pending');
+                });
             });
 
-                Route::get('/tc-yes', 'FIRConversionsController@tcYes')->name('tc-yes');
-                Route::get('/fc-yes', 'FIRConversionsController@fcYes')->name('fc-yes');
-                Route::get('/uf-update', 'FIRConversionsController@ufUpdate')->name('uf-update');
-                Route::get('/ur-update', 'FIRConversionsController@urUpdate')->name('ur-update');
-                Route::get('/ro-pending', 'FIRConversionsController@roPending')->name('ro-pending');
-                Route::get('/sro-pending', 'FIRConversionsController@sroPending')->name('sro-pending');
+            Route::prefix('fir-converted')->group(function () {
+                Route::get('/fir-conversion-yes', 'FIRConversionsController@fcYes')->name('fc-yes');
+                Route::get('/refund-order-pending', 'FIRConversionsController@sroPending')->name('sro-pending');
 
-                Route::get('/ev-no', 'FIRConversionsController@evNo')->name('ev-no');
-                Route::get('/eg-no', 'FIRConversionsController@egNo')->name('eg-no');
-                Route::get('/whatsapp-pending', 'FIRConversionsController@whatsAppPending')->name('whatsapp-pending');
-
+                Route::get('/evidence-gathered-no', 'FIRConversionsController@egNo')->name('eg-no');
+                Route::prefix('evidence-gathered')->group(function () { });
+            });
         });
     });
 });
