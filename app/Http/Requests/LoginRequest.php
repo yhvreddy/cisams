@@ -23,12 +23,12 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username' => ['required', 'string', 'max:255', function ($attribute, $value, $fail) {
+            'username' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z0-9]*$/', function ($attribute, $value, $fail) {
                 if (!$this->validateLoginId($value)) {
                     $fail('The login ID must be a valid username or email.');
                 }
             }],
-            'password' => ['required', 'string', 'min:6'],
+            'password' => ['required', 'string', 'min:6', 'regex:/^[a-zA-Z0-9@!]*$/'],
             'captcha' => ['required', 'captcha'],
         ];
     }

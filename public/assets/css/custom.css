@@ -216,3 +216,7 @@
         max-width: 100%;
     }
 }
+
+small {
+    font-size: 12px !important;
+}

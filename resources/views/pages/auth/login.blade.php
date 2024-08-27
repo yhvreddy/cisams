@@ -11,23 +11,25 @@
         {{-- <h1 class="login-title">LOGIN</h1> --}}
         <p class="login-subtitle mb-3 mt-3">Cybercrime Investigation Support, Analysis and Monitoring System</p>
 
-        <form action="{{ route('login.access') }}" class="mt-3" method="post">
+        <form id="loginForm" action="{{ route('login.access') }}" class="mt-3" method="post">
             @csrf
 
             <div class="input-group">
                 <label for="username">User Name</label>
                 <input type="text" id="username" value="{{ old('username') }}" name="username"
-                    placeholder="Enter User Name" required>
+                    placeholder="Enter User Name" required />
+                <small id="username-error" class="error-message text-danger"></small>
                 @if ($errors->has('username'))
-                    <span class="text-danger">{{ $errors->first('username') }}</span>
+                    <small class="text-danger">{{ $errors->first('username') }}</small>
                 @endif
             </div>
 
             <div class="input-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Enter Password" required>
+                <input type="password" id="password" name="password" placeholder="Enter Password" required />
+                <small id="password-error" class="error-message text-danger"></small>
                 @if ($errors->has('password'))
-                    <span class="text-danger">{{ $errors->first('password') }}</span>
+                    <small class="text-danger">{{ $errors->first('password') }}</small>
                 @endif
             </div>
 
@@ -57,4 +59,28 @@
             <button type="submit" class="login-button">LOGIN</button>
         </form>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        $('#username').on('keyup', function() {
+            validateInput(this, '#username-error');
+        });
+
+        $('#password').on('keyup', function() {
+            validateInputWithSplChar(this, '#password-error');
+        });
+
+        $('#loginForm').on('submit', function(e) {
+            let isValid = true;
+
+            if ($('#username-error').text() !== '' || $('#password-error').text() !== '') {
+                isValid = false;
+            }
+
+            if (!isValid) {
+                e.preventDefault(); // Prevent form submission if validation fails
+            }
+        });
+    </script>
 @endsection

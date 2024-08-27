@@ -32,3 +32,29 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelector(".tabLinks").click();
     }
 });
+
+function validateInput(input, errorElement) {
+    let regex = /^[a-zA-Z0-9]*$/;
+    let value = $(input).val();
+
+    if (!regex.test(value)) {
+        $(errorElement).text("Only letters and numbers are allowed.");
+        // Remove the last entered character if it's invalid
+        $(input).val(value.replace(/[^a-zA-Z0-9]/g, ""));
+    } else {
+        $(errorElement).text("");
+    }
+}
+
+function validateInputWithSplChar(input, errorElement) {
+    let regex = /^[a-zA-Z0-9@!]*$/;
+    let value = $(input).val();
+
+    if (!regex.test(value)) {
+        $(errorElement).text("Only letters, numbers, @, and ! are allowed.");
+        // Remove the last entered character if it's invalid
+        $(input).val(value.replace(/[^a-zA-Z0-9@!]/g, ""));
+    } else {
+        $(errorElement).text("");
+    }
+}
