@@ -7,15 +7,22 @@ use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use Exception;
 use App\Traits\HandlesCustomExceptions;
+
 class HomeController extends Controller
 {
     use HandlesCustomExceptions;
 
-    public function login(Request $request){
+    public function login(Request $request)
+    {
+        if(Auth::check()){
+            return redirect()->route('home');
+        }
+
         return view('pages.auth.login');
     }
 
-    public function loginAccess(LoginRequest $request){
+    public function loginAccess(LoginRequest $request)
+    {
         try {
             $credentials = $this->getCredentials($request);
 
@@ -36,7 +43,8 @@ class HomeController extends Controller
         }
     }
 
-    protected function getCredentials(LoginRequest $request){
+    protected function getCredentials(LoginRequest $request)
+    {
         $loginId = $request->input('username');
         $fieldType = filter_var($loginId, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
@@ -46,7 +54,8 @@ class HomeController extends Controller
         ];
     }
 
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         return view('pages.home');
     }
 

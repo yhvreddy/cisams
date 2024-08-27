@@ -29,6 +29,7 @@ class LoginRequest extends FormRequest
                 }
             }],
             'password' => ['required', 'string', 'min:6'],
+            'captcha' => ['required', 'captcha'],
         ];
     }
 
@@ -50,6 +51,7 @@ class LoginRequest extends FormRequest
             'login_id.max' => 'The login ID may not be greater than 255 characters.',
             'password.required' => 'The password is required.',
             'password.min' => 'The password must be at least 6 characters.',
+            'captcha' => 'The captcha is incorrect. Please try again.',
         ];
     }
 }

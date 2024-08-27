@@ -1,5 +1,5 @@
 <script src="{{ url('assets/js/scripts.js') }}"></script>
-
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
     document.getElementById('navbar-toggle').addEventListener('click', function() {
         var menu = document.getElementById('navbar-menu');
@@ -33,4 +33,33 @@
         var nav = document.getElementById('mobile-nav');
         nav.classList.toggle('active');
     });
+</script>
+
+<script>
+    $(".refresh-cpatcha").click(function() {
+        $.ajax({
+            type: 'GET',
+            url: "{{ route('generate.captcha') }}",
+            xhrFields: {
+                responseType: 'arraybuffer' // This ensures the response is treated as binary data
+            },
+            success: function(data) {
+                const base64String = arrayBufferToBase64(data);
+                $(".captcha span img").attr('src', 'data:image/png;base64,' + base64String);
+            }
+        });
+    });
+
+    // Helper function to convert ArrayBuffer to Base64 string
+    function arrayBufferToBase64(buffer) {
+        let binary = '';
+        const bytes = new Uint8Array(buffer);
+        const len = bytes.byteLength;
+
+        for (let i = 0; i < len; i++) {
+            binary += String.fromCharCode(bytes[i]);
+        }
+
+        return window.btoa(binary);
+    }
 </script>

@@ -18,6 +18,8 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
+Route::get('captcha/{config?}', '\Mews\Captcha\CaptchaController@getCaptcha')->name('generate.captcha');
+
 Route::group(['namespace' => 'App\Http\Controllers'], function () {
     Route::get('/login', 'HomeController@login')->name('login');
     Route::post('/login-access', 'HomeController@loginAccess')->name('login.access');
