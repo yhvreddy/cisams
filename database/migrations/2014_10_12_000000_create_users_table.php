@@ -19,6 +19,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->bigInteger('mobile')->nullable();
             $table->string('password');
+            $table->bigInteger('role_id')->unsigned();
             $table->enum('status', AccountStatus::values())->default(AccountStatus::ACTIVATE);
             $table->rememberToken();
             $table->timestamps();
