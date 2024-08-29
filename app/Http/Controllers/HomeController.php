@@ -35,9 +35,7 @@ class HomeController extends Controller
             }
 
             // If unsuccessful, redirect back with input and errors
-            return redirect()->back()->withInput($request->only('email'))->withErrors([
-                'email' => 'These credentials do not match our records.',
-            ]);
+            return redirect()->back()->with('failed', 'Invalid login credentials, please check once.');
         } catch (Exception $e) {
             // Use the custom exception handler
             return $this->handleException($e, 'login');

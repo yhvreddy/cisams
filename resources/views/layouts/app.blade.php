@@ -29,6 +29,8 @@
 
     <!-- GRAPHS -->
     <div class="content">
+        @include('layouts.alerts')
+
         @yield('content')
     </div>
 

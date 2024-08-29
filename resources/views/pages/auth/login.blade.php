@@ -11,6 +11,8 @@
         {{-- <h1 class="login-title">LOGIN</h1> --}}
         <p class="login-subtitle mb-3 mt-3">Cybercrime Investigation Support, Analysis and Monitoring System</p>
 
+        @include('layouts.alerts')
+
         <form id="loginForm" action="{{ route('login.access') }}" class="mt-3" method="post">
             @csrf
 
