@@ -7,6 +7,7 @@ use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use Exception;
 use App\Traits\HandlesCustomExceptions;
+use App\Enums\AccountStatus;
 
 class HomeController extends Controller
 {
@@ -49,8 +50,9 @@ class HomeController extends Controller
         $fieldType = filter_var($loginId, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
         return [
-            $fieldType => $loginId,
-            'password' => $request->input('password'),
+            $fieldType  =>  $loginId,
+            'password'  =>  $request->input('password'),
+            'status'    =>  AccountStatus::ACTIVATE
         ];
     }
 
