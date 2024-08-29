@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>@yield('title') {{ empty(env('APP_NAME'))?'': '- '.env('APP_NAME') }}</title>
+    <title>@yield('title') {{ empty(env('APP_NAME')) ? '' : '- ' . env('APP_NAME') }}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -29,10 +29,7 @@
 
     <!-- GRAPHS -->
     <div class="content">
-        <div class="container new-container"></div>
-
         @yield('content')
-
     </div>
 
     <!-- GRAPHS END -->

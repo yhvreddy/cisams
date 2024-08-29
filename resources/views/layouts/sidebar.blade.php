@@ -40,6 +40,23 @@
                 <img src="{{ url('assets/images/invest.svg') }}" class="icond">Investigation Guide
             </div>
         </a>
+
+        @role(\App\Enums\Roles::SUPERADMIN->value)
+            <a href="{{ route('user-management.index') }}">
+                <div class="icon-container">
+                    <img src="{{ url('assets/images/invest.svg') }}" class="icond">
+                    User Management
+                </div>
+            </a>
+
+            {{-- <a href="{{ route('roles.index') }}">
+                <div class="icon-container">
+                    <img src="{{ url('assets/images/invest.svg') }}" class="icond">
+                    Roles & Permissions
+                </div>
+            </a> --}}
+        @endrole
+
         @include('components.copyright')
     </div>
 </div>

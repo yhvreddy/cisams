@@ -11,8 +11,18 @@
     </div>
 
     <div class="col-md-2 ">
-        <div class="d-flex justify-content-end">
-            <a href="{{ route('fir-conversions.complaints') }}" class="btn-back " onclick="history.back()">
+        <div class="d-flex justify-content-end pageMenus">
+            @if (isset($menus))
+                @if (is_array($menus))
+                    @foreach ($menus as $menu)
+                        <a href="{{ $menu['route'] }}" class="btn-black">{{ $menu['name'] }}</a>
+                    @endforeach
+                @else
+                    {!! $menus !!}
+                @endif
+            @endif
+
+            <a href="{{ route('home') }}" class="btn-back" onclick="history.back()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="13" height="12" fill="currentColor"
                     class="bi bi-arrow-left" viewBox="0 0 16 16">
                     <path fill-rule="evenodd"

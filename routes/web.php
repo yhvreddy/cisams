@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
+use App\Enums\Roles;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,6 +65,25 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
                 Route::get('/evidence-gathered-no', 'FIRConversionsController@egNo')->name('eg-no');
                 Route::prefix('evidence-gathered')->group(function () { });
             });
+        });
+    });
+
+    Route::group(['middleware' => ['role:' . Roles::SUPERADMIN->value, 'auth']], function () {
+        Route::prefix('user-management')->name('user-management.')->group(function () {
+            Route::get('/', 'UserManagementController@index')->name('index');
+            Route::get('/create-user', 'UserManagementController@create')->name('create');
+            Route::post('/store-user', 'UserManagementController@store')->name('store');
+            Route::get('/edit-user/{user}', 'UserManagementController@edit')->name('edit');
+            Route::post('/update-user/{user}', 'UserManagementController@update')->name('update');
+            Route::get('/delete-user/{user}', 'UserManagementController@delete')->name('delete');
+        });
+
+        Route::prefix('roles')->name('roles.')->group(function () {
+            Route::get('/', 'RolesPermissionsController@indexRoles')->name('index');
+        });
+
+        Route::prefix('permissions')->name('permissions.')->group(function () {
+            Route::get('/', 'RolesPermissionsController@indexPermissions')->name('index');
         });
     });
 });
