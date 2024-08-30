@@ -43,8 +43,10 @@
                         <td data-label="Status">{{ $user->status }}</td>
                         <td data-label="Actions">
                             <a href="{{ route('user-management.edit', ['user' => $user->id]) }}" class="update-btn">Edit</a>
-                            {{-- <a href="{{ route('user-management.delete', ['user' => $user->id]) }}"
-                                class="pink-btn">Delete</a> --}}
+                            @role(\App\Enums\Roles::SUPERADMIN->value)
+                                <a href="{{ route('user-management.delete', ['user' => $user->id]) }}"
+                                    onclick="return confirm('Do you want to delete user?')" class="pink-btn">Delete</a>
+                            @endrole
                         </td>
                     </tr>
                     <!-- Repeat rows as needed -->

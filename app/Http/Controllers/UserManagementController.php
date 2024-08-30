@@ -112,6 +112,20 @@ class UserManagementController extends Controller
         }
     }
 
-    public function delete(){}
+    public function delete(User $user){
+        DB::beginTransaction();
+        try{
+            if($user->delete()){
+                DB::commit();
+                return redirect()->route('user-management.index')->with('success', 'User deleted successfully');
+            }
+
+            DB::rollBack();
+            return redirect()->route('user-management.index')->with('failed', 'User not deleted.');
+        } catch (Exception $e) {
+            DB::rollBack();
+            return $this->handleException($e, 'user-management.index');
+        }
+    }
 
 }
