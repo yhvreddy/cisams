@@ -10,7 +10,7 @@
                 <img src="{{ url('assets/images/search1.svg') }}" class="icond">Search
             </div>
         </a>
-        <a href="#">
+        <a href="{{ route('hotspots.index') }}">
             <div class="icon-container">
                 <img src="{{ url('assets/images/hotspot.svg') }}" class="icond">Hotspots
             </div>

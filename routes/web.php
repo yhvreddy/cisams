@@ -34,6 +34,12 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
             Route::get('/non-financial', 'ComplaintsController@nonFinancial')->name('non-financial');
         });
 
+
+
+        Route::prefix('hotspots')->name('hotspots.')->group(function () {
+            Route::get('/', 'HotSpotsController@getHotSpots')->name('index');
+        });
+
         Route::prefix('case-status')->name('case-status.')->group(function () {
             Route::get('/', 'CaseStatusController@index')->name('pe');
             Route::prefix('pending-evidence')->group(function () {
@@ -63,7 +69,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
                 Route::get('/refund-order-pending', 'FIRConversionsController@sroPending')->name('sro-pending');
 
                 Route::get('/evidence-gathered-no', 'FIRConversionsController@egNo')->name('eg-no');
-                Route::prefix('evidence-gathered')->group(function () { });
+                Route::prefix('evidence-gathered')->group(function () {});
             });
         });
     });
