@@ -4,7 +4,7 @@
 <head>
   <title>CISAMS</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <link
     href="https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&display=swap"
@@ -12,14 +12,19 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.0.1/dist/chart.umd.min.js"></script>
+
+ <style>
+  
+ </style>
 </head>
+
+
 
 <body>
 
   <!--header area start-->
-
   <header>
-
     <nav class="navbar">
 
       <a href="index.html"><img src="images/logo.png"></a>
@@ -142,16 +147,16 @@
   </div>
 
 
-  <div class="content ">
-    <div class="container ">
-      <div class="row ">
-        <div class="col-md-10">
-          <h4 class="fir-head">FIR Conversions <span class="totl-complain">| Fir Converted</span></h4>
-        </div>
+  <div class="content">
 
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10">
+          <h4 class="fir-head">HABITUAL OFFENDERS<span class="totl-complain"> &nbsp;| &nbsp;Hyderabad</span> </h4>
+        </div>
         <div class="col-md-2 ">
           <div class="d-flex justify-content-end">
-            <a href="fir-tc-conversion-main.html#tab2" class="btn-back">
+            <a href="habitual-offenders.html" class="btn-back " onclick="history.back()">
               <svg xmlns="http://www.w3.org/2000/svg" width="13" height="12" fill="currentColor"
                 class="bi bi-arrow-left" viewBox="0 0 16 16">
                 <path fill-rule="evenodd"
@@ -160,49 +165,102 @@
               </a>
           </div>
         </div>
-
-
-
-        <div class="row mt-4">
-          <table class="table">
-            <thead class="rounded-header">
-              <tr>
-                <th>S.NO.</th>
-                <th>FIR NO</th>
-                <th>SEC OF LAW</th>
-                <th>DATE OF FIR</th>
-                <th>EVIDENCE GATHERED</th>
-                <th>ACCUSED ARRESTED</th>
-                <th>STATUS-UI</th>
-                <th>STATUS - CHARGED</th>
-                <th>STATUS - PT</th>
-
-              </tr>
-            </thead>
-
-            <tbody class="wht-box ">
-              <tr>
-                <td data-label="S.No"> 1</td>
-                <td data-label="FIR NO">133/2010</td>
-                <td data-label="SEC OF LAW">60(D) IT Act</td>
-                <td data-label="DATE OF FIR">23-07-2024</td>
-                <td data-label="EVIDENCE GATHERED"><a href="fir-fc-eg-no.html" class="borderr-button">No</a>                </td>
-                <td data-label="ACCUSED ARRESTED"><btn class="borderr-button">No</btn>    </td>
-                <td data-label="STATUS-UI"><btn class="border-button">Yes</btn>              </td>
-                <td data-label="STATUS - CHARGED"><btn class="borderr-button">No</btn>                </td>
-                <td data-label="STATUS - PT"><btn class="borderr-button">No</btn>                </td>
-              </tr>
-
-              
-
-              <!-- Repeat rows as needed -->
-            </tbody>
-          </table>
-        </div>
       </div>
+    <div class="row mt-2">
+      <table class="table">
+        <thead class="rounded-header">
+          <tr>
+            <th>S.NO.</th>
+            <th>PHOTO</th>
+            <th>NAME</th>
+            <th>AGE</th>
+            <th>PHONE</th>
+            <th>STATE</th>
+            <th>PERSON TYPE</th>
+            <th>CRIME LINKS</th>
+            
+          </tr>
+        </thead>
 
+        <tbody class="wht-box ">
+          <tr>
+            <td data-label="S.No"> 1</td>
+            <td data-label="PHOTO">
+              <img src="images/Prof-imr.png" alt="Small Image">
+            </td>
+            <td data-label="NAME">Ramesh</td>
+            <td data-label="AGE">35</td>
+            <td data-label="PHONE">9870564513</td>
+            <td data-label="STATE">Telangana</td>
+            <td data-label="PERSON TYPE">Unknown</td>
+            <td data-label="CRIME LINKS"><a href="habi-offen-crimelink.html" btn class="blu-button">Crime Links</btn> </a></td>
+          
+
+          </tr>
+
+          <tr>
+            <td data-label="S.No">2</td>
+            <td data-label="PHOTO"> <img src="images/Prof-imr1.png" alt="Small Image"></td>
+            <td data-label="NAME">Nirmal</td>
+            <td data-label="AGE">42</td>
+            <td data-label="PHONE">8907643215</td>
+            <td data-label="STATE">Telangana</td>
+            <td data-label="PERSON TYPE">Criminal</td>
+            <td data-label="CRIME LINKS"><a href="habi-offen-crimelink.html" btn class="blu-button">Crime Links</btn> </a></td>
+          
+
+          </tr>
+
+          <tr>
+            <td data-label="S.No">3</td>
+            <td data-label="PHOTO"> <img src="images/Prof-imr2.png" alt="Small Image"></td>
+            <td data-label="NAME">Jaipal</td>
+            <td data-label="AGE">37</td>
+            <td data-label="PHONE">7789450921</td>
+            <td data-label="STATE">Telangana</td>
+            <td data-label="PERSON TYPE">Unknown</td>
+            <td data-label="CRIME LINKS"><a href="habi-offen-crimelink.html" btn class="blu-button">Crime Links</btn> </a></td>
+          
+
+          </tr>
+
+          <tr>
+            <td data-label="S.No">4</td>
+            <td data-label="PHOTO"> <img src="images/Prof-imr3.png" alt="Small Image"></td>
+            <td data-label="NAME">Salman</td>
+            <td data-label="AGE">35</td>
+            <td data-label="PHONE">9946589023</td>
+            <td data-label="STATE">Telangana</td>
+            <td data-label="PERSON TYPE">Criminal</td>
+            <td data-label="CRIME LINKS"><a href="habi-offen-crimelink.html" btn class="blu-button">Crime Links</btn> </a></td>
+          
+
+          </tr>
+
+          <tr>
+            <td data-label="S.No">5</td>
+            <td data-label="PHOTO"> <img src="images/Prof-imr5.png" alt="Small Image"></td>
+            <td data-label="NAME">Suresh</td>
+            <td data-label="AGE">40</td>
+            <td data-label="PHONE">8809764523</td>
+            <td data-label="STATE">Telangana</td>
+            <td data-label="PERSON TYPE">Unknown</td>
+            <td data-label="CRIME LINKS"><a href="habi-offen-crimelink.html" btn class="blu-button">Crime Links</btn> </a></td>
+          
+
+          </tr>
+
+          <!-- Repeat rows as needed -->
+        </tbody>
+      </table>
     </div>
   </div>
+  </div>
+
+
+
+
+
 
   <script src="js/bootstrap.min.js"></script>
 
@@ -229,5 +287,10 @@
       nav.classList.toggle('active');
     });
   </script>
+
+
 </body>
+
+
+
 </html>

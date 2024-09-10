@@ -32,7 +32,7 @@
   <header>
     <nav class="navbar">
 
-      <a href="#"><img src="images/logo.png"></a>
+      <a href="index.html"><img src="images/logo.png"></a>
       <span class="nv-text">Cybercrime Investigation Support, Analysis and Monitoring System</span>
 
       <ul class="navbar-menu " id="navbar-menu">
@@ -76,9 +76,9 @@
   <!--mobile navigation bar start-->
   <div class="mobile_nav_items" id="mobile-nav">
     <a href="index.html"><img src="images/home.svg" class="icond">Home</a>
-    <a href="#"><img src="images/search1.svg" class="icond">Search</a>
-    <a href="#"><img src="images/hotspot.svg" class="icond">Hotspots</a>
-    <a href="#"><img src="images/habitual.svg" class="icond">Habitual Offenders</a>
+    <a href="search.html"><img src="images/search1.svg" class="icond">Search</a>
+    <a href="hotspot.html"><img src="images/hotspot.svg" class="icond">Hotspots</a>
+    <a href="habitual-offenders.html"><img src="images/habitual.svg" class="icond">Habitual Offenders</a>
     <a href="#"><img src="images/data-entry.svg" class="icond">Data Entry</a>
     <a href="#"> <img src="images/pendind.svg" class="icond">Pending Request</a>
     <a href="#"><img src="images/aware.svg" class="icond">Awareness Campaign</a>
@@ -96,17 +96,17 @@
           <img src="images/home.svg" class="icond">Home
         </div>
       </a>
-      <a href="#">
+      <a href="search.html">
         <div class="icon-container">
           <img src="images/search1.svg" class="icond">Search
         </div>
       </a>
-      <a href="#">
+      <a href="hotspot.html">
         <div class="icon-container">
           <img src="images/hotspot.svg" class="icond">Hotspots
         </div>
       </a>
-      <a href="#">
+      <a href="habitual-offenders.html">
         <div class="icon-container">
           <img src="images/habitual.svg" class="icond">Habitual Offenders
         </div>
@@ -518,7 +518,7 @@
       <div class="row">
         <div class="col-md-4 box">
             <h5 class="titl">Case Status</h5>
-   <a href='case-status-pe.html'>  <canvas id="uniqueCaseStatusChart" height="240"></canvas>
+   <a href='case-status-pe.html'> <canvas id="uniqueCaseStatusChart" height="240"></canvas>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const ctx = document.getElementById('uniqueCaseStatusChart').getContext('2d');
@@ -530,7 +530,7 @@
                         'Pending\nArrest', 
                         'Pending\nChargesheet', 
                         'Charged', 
-                        'Unter\nTrial', 
+                        'Under\nTrial', 
                         'Closed'
                     ],
                     datasets: [
@@ -555,7 +555,7 @@
                             backgroundColor: '#7080FF'
                         },
                         {
-                            label: 'Unter Trial',
+                            label: 'Under Trial',
                             data: [0, 0, 0, 0, 40, 0], 
                             backgroundColor: '#A9B6FF'
                         },
@@ -571,13 +571,15 @@
                         x: {
                             ticks: {
                                 autoSkip: false,
-                                maxRotation: 0, // Ensure labels are horizontal
+                                maxRotation: 0,
                                 minRotation: 0,
                                 font: {
-                                    size: 10, // Smaller font size for labels
+                                    size: 10,
                                     family: 'Red Hat Display'
                                 }
-                            }
+                            },
+                            categoryPercentage: 1.0, // Full width for category
+                            barPercentage: 0.8 // Reduce the bar width slightly
                         },
                         y: {
                             beginAtZero: true,
@@ -607,7 +609,6 @@
             });
         });
     </script>
-
            </a>
 
  
@@ -729,7 +730,8 @@
                     label: 'Refund Petitions Pending',
                     data: [65, 20],
                     backgroundColor: '#092081',
-                    borderRadius: 10
+                    borderRadius: 10,
+                    
                 },
                 {
                     label: 'Refund Petitions Filed',
@@ -751,11 +753,18 @@
                     }
                 },
                 plugins: {
-                    legend: {
-                        position: 'top'
-                    }
-                }
+        legend: {
+            position: 'top',
+            labels: {
+                font: {
+                    size: 10 
+                },
+                boxWidth: 10, 
+                padding: 5 // Reduce padding around each item
             }
+        }
+    }
+}
         });
     </script>
 

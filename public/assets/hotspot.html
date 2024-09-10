@@ -4,7 +4,7 @@
 <head>
   <title>CISAMS</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <link
     href="https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&display=swap"
@@ -12,14 +12,22 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.0.1/dist/chart.umd.min.js"></script>
+
+  <style>
+#map {
+            height: 500px; /* Adjust the height of the map */
+            width: 100%;
+        }
+  </style>
 </head>
+
+
 
 <body>
 
   <!--header area start-->
-
   <header>
-
     <nav class="navbar">
 
       <a href="index.html"><img src="images/logo.png"></a>
@@ -142,67 +150,115 @@
   </div>
 
 
-  <div class="content ">
-    <div class="container ">
+  <div class="content">
+
+    <div class="container">
       <div class="row ">
         <div class="col-md-10">
-          <h4 class="fir-head">FIR Conversions <span class="totl-complain">| Fir Converted</span></h4>
+          <h4 class="fir-head">HOTSPOTS</h4>
         </div>
-
-        <div class="col-md-2 ">
-          <div class="d-flex justify-content-end">
-            <a href="fir-tc-conversion-main.html#tab2" class="btn-back">
-              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="12" fill="currentColor"
-                class="bi bi-arrow-left" viewBox="0 0 16 16">
-                <path fill-rule="evenodd"
-                  d="M15 8a.5.5 0 0 1-.5.5H3.707l4.147 4.146a.5.5 0 0 1-.708.708l-5-5a.5.5 0 0 1 0-.708l5-5a.5.5 0 1 1 .708.708L3.707 7.5H14.5A.5.5 0 0 1 15 8z" />
-              </svg> Back
-              </a>
-          </div>
-        </div>
-
-
-
-        <div class="row mt-4">
-          <table class="table">
-            <thead class="rounded-header">
-              <tr>
-                <th>S.NO.</th>
-                <th>FIR NO</th>
-                <th>SEC OF LAW</th>
-                <th>DATE OF FIR</th>
-                <th>EVIDENCE GATHERED</th>
-                <th>ACCUSED ARRESTED</th>
-                <th>STATUS-UI</th>
-                <th>STATUS - CHARGED</th>
-                <th>STATUS - PT</th>
-
-              </tr>
-            </thead>
-
-            <tbody class="wht-box ">
-              <tr>
-                <td data-label="S.No"> 1</td>
-                <td data-label="FIR NO">133/2010</td>
-                <td data-label="SEC OF LAW">60(D) IT Act</td>
-                <td data-label="DATE OF FIR">23-07-2024</td>
-                <td data-label="EVIDENCE GATHERED"><a href="fir-fc-eg-no.html" class="borderr-button">No</a>                </td>
-                <td data-label="ACCUSED ARRESTED"><btn class="borderr-button">No</btn>    </td>
-                <td data-label="STATUS-UI"><btn class="border-button">Yes</btn>              </td>
-                <td data-label="STATUS - CHARGED"><btn class="borderr-button">No</btn>                </td>
-                <td data-label="STATUS - PT"><btn class="borderr-button">No</btn>                </td>
-              </tr>
-
-              
-
-              <!-- Repeat rows as needed -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-
+    </div>
+    <div class="row">
+      <div id="map"></div>
     </div>
   </div>
+  </div>
+
+
+
+
+
+  <script>
+    function initMap() {
+        // Create a map centered in India
+        const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 5,
+            center: { lat: 20.5937, lng: 78.9629 } // Center of India
+        });
+
+        // Array of locations in various Indian states with titles and addresses
+        const locations = [
+            // Hyderabad Locations (Telangana)
+            { title: "Charminar", lat: 17.3616, lng: 78.4747, address: "Charminar, Hyderabad, Telangana, India" },
+            { title: "HITEC City", lat: 17.4474, lng: 78.3762, address: "HITEC City, Hyderabad, Telangana, India" },
+
+            // Telangana Cities
+            { title: "Warangal", lat: 17.9784, lng: 79.5910, address: "Warangal, Telangana, India" },
+            { title: "Nizamabad", lat: 18.6725, lng: 78.0941, address: "Nizamabad, Telangana, India" },
+            { title: "Khammam", lat: 17.2473, lng: 80.1514, address: "Khammam, Telangana, India" },
+            { title: "Karimnagar", lat: 18.4386, lng: 79.1288, address: "Karimnagar, Telangana, India" },
+            { title: "Mahbubnagar", lat: 16.7375, lng: 77.9803, address: "Mahbubnagar, Telangana, India" },
+            { title: "Adilabad", lat: 19.6644, lng: 78.5320, address: "Adilabad, Telangana, India" },
+            { title: "Siddipet", lat: 18.1011, lng: 78.8520, address: "Siddipet, Telangana, India" },
+            { title: "Medak", lat: 18.0450, lng: 78.2600, address: "Medak, Telangana, India" },
+            { title: "Ramagundam", lat: 18.7595, lng: 79.4477, address: "Ramagundam, Telangana, India" },
+
+            // Maharashtra
+            { title: "Mumbai", lat: 19.0760, lng: 72.8777, address: "Mumbai, Maharashtra, India" },
+            { title: "Pune", lat: 18.5204, lng: 73.8567, address: "Pune, Maharashtra, India" },
+
+            // Bihar
+            { title: "Patna", lat: 25.5941, lng: 85.1376, address: "Patna, Bihar, India" },
+            { title: "Gaya", lat: 24.7955, lng: 85.0038, address: "Gaya, Bihar, India" },
+
+            // Uttar Pradesh
+            { title: "Lucknow", lat: 26.8467, lng: 80.9462, address: "Lucknow, Uttar Pradesh, India" },
+            { title: "Varanasi", lat: 25.3176, lng: 82.9739, address: "Varanasi, Uttar Pradesh, India" },
+
+            // West Bengal (Kolkata)
+            { title: "Kolkata", lat: 22.5726, lng: 88.3639, address: "Kolkata, West Bengal, India" },
+
+            // Jammu
+            { title: "Jammu", lat: 32.7266, lng: 74.8570, address: "Jammu, Jammu & Kashmir, India" },
+
+            // Punjab
+            { title: "Amritsar", lat: 31.6340, lng: 74.8723, address: "Amritsar, Punjab, India" },
+            { title: "Ludhiana", lat: 30.9010, lng: 75.8573, address: "Ludhiana, Punjab, India" },
+
+            // Karnataka
+            { title: "Bengaluru", lat: 12.9716, lng: 77.5946, address: "Bengaluru, Karnataka, India" },
+
+            // Rajasthan
+            { title: "Jaipur", lat: 26.9124, lng: 75.7873, address: "Jaipur, Rajasthan, India" },
+
+            // Tamil Nadu
+            { title: "Chennai", lat: 13.0827, lng: 80.2707, address: "Chennai, Tamil Nadu, India" },
+
+            // Gujarat
+            { title: "Ahmedabad", lat: 23.0225, lng: 72.5714, address: "Ahmedabad, Gujarat, India" }
+        ];
+
+        // Loop through the locations and create markers with info windows
+        locations.forEach(location => {
+            const marker = new google.maps.Marker({
+                position: { lat: location.lat, lng: location.lng },
+                map: map,
+                title: location.title
+            });
+
+            const infoWindow = new google.maps.InfoWindow({
+                content: `<h4>${location.title}</h4><p>${location.address}</p>`
+            });
+
+            // Add a click event listener to each marker to open the info window
+            marker.addListener("click", () => {
+                infoWindow.open(map, marker);
+            });
+        });
+    }
+</script>
+
+<!-- Replace YOUR_API_KEY with your actual API key -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCF46BL8RTxp77pZ3r3MtvEd0NuTuRmXW8&callback=initMap" async defer></script>
+
+
+  
+
+  
+    
+
+
+
 
   <script src="js/bootstrap.min.js"></script>
 
@@ -229,5 +285,10 @@
       nav.classList.toggle('active');
     });
   </script>
+
+
 </body>
+
+
+
 </html>
