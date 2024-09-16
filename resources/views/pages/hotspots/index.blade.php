@@ -11,8 +11,8 @@
         'titleOne' => 'Hotspots',
     ])
 
-    <div class="row">
-        <div class="col-md-12" id="map"></div>
+    <div>
+        <div id="map"></div>
     </div>
 
     {{-- @php(dd($locationsJson)) --}}

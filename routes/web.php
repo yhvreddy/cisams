@@ -72,6 +72,10 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
                 Route::prefix('evidence-gathered')->group(function () {});
             });
         });
+
+        Route::prefix('search')->name('search.')->group(function () {
+            Route::get('/', 'SearchController@index')->name('index');
+        });
     });
 
     Route::group(['middleware' => ['role:' . Roles::SUPERADMIN->value, 'auth']], function () {

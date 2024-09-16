@@ -5,7 +5,7 @@
                 <img src="{{ url('assets/images/home.svg') }}" class="icond">Home
             </div>
         </a>
-        <a href="#">
+        <a href="{{ route('search.index') }}">
             <div class="icon-container">
                 <img src="{{ url('assets/images/search1.svg') }}" class="icond">Search
             </div>

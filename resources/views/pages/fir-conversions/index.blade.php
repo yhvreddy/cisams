@@ -33,80 +33,31 @@
                 </thead>
 
                 <tbody class="wht-box ">
-                    <tr>
-                        <td data-label="S.No"> 1</td>
-                        <td data-label="NCRP NO">352534567092</td>
-                        <td data-label="DATE Of REPORT">21-07-2024</td>
-                        <td data-label="MO">Identity Theft</td>
-                        <td data-label="AMOUNT LOST">50000</td>
-                        <td data-label="AMOUNT POH">50000</td>
-                        <td data-label="FIR CONVERSION"><a href="{{ route('fir-conversions.tc-yes') }}"
-                                class="border-button">Yes</a>
-                        </td>
-                        <td data-label="STATUS - REFUND ORDER">
-                            <btn class="gree-btn">Received</btn>
-                        </td>
-                        <td data-label="REFUND PETITION"></td>
-                        <td data-label="REFUND ORDERS"></td>
-                    </tr>
-                    <tr>
-                        <td data-label="S.No"> 2</td>
-                        <td data-label="NCRP NO">332534556432</td>
-                        <td data-label="DATE Of REPORT">25-07-2024</td>
-                        <td data-label="MO">Courier Scam</td>
-                        <td data-label="AMOUNT LOST">50000</td>
-                        <td data-label="AMOUNT POH">50000</td>
-                        <td data-label="FIR CONVERSION">
-                            <btn class="borderr-button">No</btn>
-                        </td>
-                        <td data-label="STATUS - REFUND ORDER"><a href="{{ route('fir-conversions.ro-pending') }}"
-                                class="pink-btn">Pending</a>
-                        </td>
-                        <td data-label="REFUND PETITION">
-                            <a href="{{ route('fir-conversions.uf-update') }}" class="update-btn ">Update</a>
-                        </td>
-                        <td data-label="REFUND ORDERS">
-                            <a href="{{ route('fir-conversions.ur-update') }}" class="update-btn ">Update</a>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td data-label="S.No"> 3</td>
-                        <td data-label="NCRP NO">352534567092</td>
-                        <td data-label="DATE Of REPORT">21-07-2024</td>
-                        <td data-label="MO">Identity Theft</td>
-                        <td data-label="AMOUNT LOST">50000</td>
-                        <td data-label="AMOUNT POH">50000</td>
-                        <td data-label="FIR CONVERSION"><a href="{{ route('fir-conversions.tc-yes') }}"
-                                class="border-button">Yes</a>
-                        </td>
-                        <td data-label="STATUS - REFUND ORDER">
-                            <btn class="gree-btn">Received</btn>
-                        </td>
-                        <td data-label="REFUND PETITION"></td>
-                        <td data-label="REFUND ORDERS"></td>
-                    </tr>
-                    <tr>
-                        <td data-label="S.No"> 2</td>
-                        <td data-label="NCRP NO">332534556432</td>
-                        <td data-label="DATE Of REPORT">25-07-2024</td>
-                        <td data-label="MO">Courier Scam</td>
-                        <td data-label="AMOUNT LOST">50000</td>
-                        <td data-label="AMOUNT POH">50000</td>
-                        <td data-label="FIR CONVERSION"><a href="{{ route('fir-conversions.tc-yes') }}"
-                                class="border-button">Yes</a>
-                        </td>
-                        <td data-label="STATUS - REFUND ORDER"><a href="{{ route('fir-conversions.ro-pending') }}"
-                                class="pink-btn">Pending</a>
-                        </td>
-                        <td data-label="REFUND PETITION"><a href="{{ route('fir-conversions.uf-update') }}"
-                                class="update-btn ">Update</a>
-                        </td>
-                        <td data-label="REFUND ORDERS"><a href="{{ route('fir-conversions.ur-update') }}"
-                                class="update-btn ">Update</a>
-                        </td>
-                    </tr>
-
+                    @foreach ($allTotalPoh as $key => $poh)
+                        <tr>
+                            <td data-label="S.No">{{ $poh->sno }}</td>
+                            <td data-label="NCRP NO">{{ $poh->ncrp_no }}</td>
+                            <td data-label="DATE Of REPORT">{{ $poh->date }}</td>
+                            <td data-label="MO">Identity Theft</td>
+                            <td data-label="AMOUNT LOST">{{ $poh->amount_lost }}</td>
+                            <td data-label="AMOUNT POH">{{ $poh->amount_poh }}</td>
+                            <td data-label="FIR CONVERSION">
+                                @if ($poh->status == 'Under Process')
+                                    <a href="{{ route('fir-conversions.tc-yes', ['sno' => $poh->sno]) }}"
+                                        class="border-button">Yes</a>
+                                @elseif ($poh->status == 'FIR Registered')
+                                    <btn class="borderr-button">No</btn>
+                                @elseif($poh->status == 'Closed')
+                                    <btn class="borderr-button">Closed</btn>
+                                @endif
+                            </td>
+                            <td data-label="STATUS - REFUND ORDER">
+                                <btn class="gree-btn">Received</btn>
+                            </td>
+                            <td data-label="REFUND PETITION"></td>
+                            <td data-label="REFUND ORDERS"></td>
+                        </tr>
+                    @endforeach
                     <!-- Repeat rows as needed -->
                 </tbody>
             </table>
@@ -129,68 +80,30 @@
                 </thead>
 
                 <tbody class="wht-box ">
-                    <tr>
-                        <td data-label="S.No"> 1</td>
-                        <td data-label="NCRP NO">352534567092</td>
-                        <td data-label="DATE Of REPORT">21-07-2024</td>
-                        <td data-label="MO">Identity Theft</td>
-                        <td data-label="AMOUNT LOST">50000</td>
-                        <td data-label="AMOUNT POH">50000</td>
-                        <td data-label="FIR CONVERSION"><a href="{{ route('fir-conversions.fc-yes') }}"
-                                class="border-button">Yes</a></td>
-                        <td data-label="STATUS - REFUND ORDER">
-                            <btn class="gree-btn">Received</btn>
-                        </td>
-                        <td data-label="REFUND ORDERS"></td>
-                    </tr>
-                    <tr>
-                        <td data-label="S.No"> 2</td>
-                        <td data-label="NCRP NO">332534556432</td>
-                        <td data-label="DATE Of REPORT">25-07-2024</td>
-                        <td data-label="MO">Courier Scam</td>
-                        <td data-label="AMOUNT LOST">50000</td>
-                        <td data-label="AMOUNT POH">50000</td>
-                        <td data-label="FIR CONVERSION"><a href="{{ route('fir-conversions.fc-yes') }}"
-                                class="border-button">Yes</a></td>
-                        <td data-label="STATUS - REFUND ORDER">
-                            <a href="{{ route('fir-conversions.sro-pending') }}" class="pink-btn">Pending</a>
-                        </td>
-                        <td data-label="REFUND ORDERS"></td>
-                    </tr>
-
-                    <tr>
-                        <td data-label="S.No"> 3</td>
-                        <td data-label="NCRP NO">352534567092</td>
-                        <td data-label="DATE Of REPORT">21-07-2024</td>
-                        <td data-label="MO">Identity Theft</td>
-                        <td data-label="AMOUNT LOST">50000</td>
-                        <td data-label="AMOUNT POH">50000</td>
-                        <td data-label="FIR CONVERSION">
-                            <btn class="border-button">Yes</btn>
-                        </td>
-                        <td data-label="STATUS - REFUND ORDER">
-                            <btn class="gree-btn">Received</btn>
-                        </td>
-                        <td data-label="REFUND ORDERS"></td>
-                    </tr>
-                    <tr>
-                        <td data-label="S.No"> 4</td>
-                        <td data-label="NCRP NO">332534556432</td>
-                        <td data-label="DATE Of REPORT">23-07-2024</td>
-                        <td data-label="MO">Courier Scam</td>
-                        <td data-label="AMOUNT LOST">7500000</td>
-                        <td data-label="AMOUNT POH">50000</td>
-                        <td data-label="FIR CONVERSION"><a href="{{ route('fir-conversions.fc-yes') }}"
-                                class="border-button">Yes</a></td>
-                        <td data-label="STATUS - REFUND ORDER">
-                            <btn class="pink-btn">Pending</btn>
-                        </td>
-                        <td data-label="REFUND ORDERS">
-                            <btn class="update-btn ">Update</btn>
-                        </td>
-                    </tr>
-
-
+                    @foreach ($totalConvertedPoh as $key => $poh)
+                        <tr>
+                            <td data-label="S.No">{{ $poh->sno }}</td>
+                            <td data-label="NCRP NO">{{ $poh->ncrp_no }}</td>
+                            <td data-label="DATE Of REPORT">{{ $poh->date }}</td>
+                            <td data-label="MO">Identity Theft</td>
+                            <td data-label="AMOUNT LOST">{{ $poh->amount_lost }}</td>
+                            <td data-label="AMOUNT POH">{{ $poh->amount_poh }}</td>
+                            <td data-label="FIR CONVERSION">
+                                @if ($poh->status == 'Under Process')
+                                    <a href="{{ route('fir-conversions.tc-yes', ['sno' => $poh->sno]) }}"
+                                        class="border-button">Yes</a>
+                                @elseif ($poh->status == 'FIR Registered')
+                                    <btn class="borderr-button">No</btn>
+                                @elseif($poh->status == 'Closed')
+                                    <btn class="borderr-button">Closed</btn>
+                                @endif
+                            </td>
+                            <td data-label="STATUS - REFUND ORDER">
+                                <btn class="gree-btn">Received</btn>
+                            </td>
+                            <td data-label="REFUND ORDERS"></td>
+                        </tr>
+                    @endforeach
                     <!-- Repeat rows as needed -->
                 </tbody>
             </table>
