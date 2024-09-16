@@ -12,16 +12,21 @@ class AdditionalInformation extends Model
     protected $table = "Sample_Additional_Information";
 
     protected $fillable = [
-        'Acknowledgement No',
-        'Account No',
-        'ATM ID',
-        'Latitude',
-        'Longitude',
-        'ATM address',
-        'District',
-        'State',
-        'Amount',
-        'layers',
-        'date of download'
+        'Acknowledgement_No',
+        'State_Name',
+        'District_Name',
+        'Police_Station',
+        'Crime_Aditional_Information',
+        'Category',
+        'Sub_Category',
+        'Status',
+        'Incident_Date',
+        'Complaint_Date',
+        'Last_Action_Taken_on',
+        'Suspect_Name',
+        'Suspect_Id_No',
+        'Fraudulent_Amount',
+        'Complainant_Name',
+        'Complainant_Address'
     ];
 }

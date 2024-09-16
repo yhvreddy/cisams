@@ -8,14 +8,24 @@ use Illuminate\Support\Facades\Auth;
 use Exception;
 use App\Traits\HandlesCustomExceptions;
 use App\Enums\AccountStatus;
+use App\Models\PTWarrants;
 
 class HomeController extends Controller
 {
     use HandlesCustomExceptions;
 
+    protected PTWarrants $ptWarrants;
+
+    public function __construct(
+        PTWarrants $_ptWarrants
+    ) {
+        $this->ptWarrants = $_ptWarrants;
+    }
+
+
     public function login(Request $request)
     {
-        if(Auth::check()){
+        if (Auth::check()) {
             return redirect()->route('home');
         }
 
@@ -56,7 +66,22 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
-        return view('pages.home');
+        $ptWarrant =
+            $this->ptWarrants
+            ->selectRaw('
+                COUNT(CASE WHEN SOURCE = ? THEN 1 END) as fir_links_count,
+                COUNT(CASE WHEN SOURCE = ? THEN 1 END) as ncrp_links_count,
+                COUNT(CASE WHEN PT_EXECUTED != ? THEN 1 END) as pt_warranty_executed_count,
+                COUNT(CASE WHEN PT_EXECUTED = ? THEN 1 END) as pt_warranty_pending_count
+            ', ['FIR', 'NCRP', 'no', 'no'])
+            ->first();
+        $ptWarrantCountsJSON = json_encode((array) [
+            floatval($ptWarrant->fir_links_count ?? 0),
+            floatval($ptWarrant->ncrp_links_count ?? 0),
+            floatval($ptWarrant->pt_warranty_executed_count ?? 0),
+            floatval($ptWarrant->pt_warranty_pending_count ?? 0),
+        ]);
+        return view('pages.home', compact('ptWarrantCountsJSON'));
     }
 
     public function logout()

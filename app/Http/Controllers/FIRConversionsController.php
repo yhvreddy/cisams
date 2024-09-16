@@ -22,29 +22,10 @@ class FIRConversionsController extends Controller
 
     public function index(Request $request)
     {
-        $allTotalPoh = $this->totalPoh->select(
-            'S No as sno',
-            'NCRP Ack No as ncrp_no',
-            'District as district',
-            'Police Station as police_station',
-            'Status as status',
-            'Amount Lost as amount_lost',
-            'Amount POH as amount_poh',
-            'Bank as bank',
-            'Date of Action as date'
-        )->limit(20)->get();
-        $totalConvertedPoh = $this->totalPoh->select(
-            'S No as sno',
-            'NCRP Ack No as ncrp_no',
-            'District as district',
-            'Police Station as police_station',
-            'Status as status',
-            'Amount Lost as amount_lost',
-            'Amount POH as amount_poh',
-            'Bank as bank',
-            'Date of Action as date'
-        )->where('status', 'Under Process')->limit(20)->get();
-        return view('pages.fir-conversions.index', compact('allTotalPoh', 'totalConvertedPoh'));
+        $allAdditionalInfo = $this->additionalInformation->limit(50)->get();
+        $convertedAdditionalInfo = $this->additionalInformation->whereIn('status', ['Registered', 'FIR Registered'])->limit(50)->get();
+        $pendingAdditionalInfo = $this->additionalInformation->whereNotIn('status', ['Registered', 'FIR Registered', 'Closed'])->limit(20)->get();
+        return view('pages.fir-conversions.index', compact('allAdditionalInfo', 'convertedAdditionalInfo', 'pendingAdditionalInfo'));
     }
 
     public function tcYes(Request $request)

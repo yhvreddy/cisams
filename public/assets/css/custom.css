@@ -226,3 +226,15 @@ small {
     /* Adjust the height of the map */
     width: 100%;
 }
+
+.button-green {
+    padding: 6px 15px;
+    font-size: 11px;
+    color: #ffffff;
+    background-color: #0d671d;
+    border: 1px solid #1f7530;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}

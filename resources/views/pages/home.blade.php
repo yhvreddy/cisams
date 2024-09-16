@@ -489,7 +489,7 @@
                             'PT Warrants\nPending'
                         ],
                         datasets: [{
-                            data: [100, 260, 50, 70],
+                            data: {!! $ptWarrantCountsJSON !!},
                             backgroundColor: [
                                 '#375CE1',
                                 '#C6D2FF',
