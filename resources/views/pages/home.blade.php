@@ -32,7 +32,7 @@
                     type: 'doughnut',
                     data: {
                         datasets: [{
-                            data: [745, 255],
+                            data: {!! $graphOneCountJson !!},
                             backgroundColor: ['#002F8A', '#3E77FF'],
                             borderWidth: 0
                         }],
@@ -77,7 +77,7 @@
                     type: 'pie',
                     data: {
                         datasets: [{
-                            data: [255, 745],
+                            data: {!! $nonFinancialChartJson !!},
                             backgroundColor: ['#3E77FF', '#E0E0E0'],
                             borderWidth: 0
                         }],
@@ -121,7 +121,7 @@
                     type: 'pie',
                     data: {
                         datasets: [{
-                            data: [745, 255],
+                            data: {!! $financialChartJson !!},
                             backgroundColor: ['#002F8A', '#E0E0E0'],
                             borderWidth: 0
                         }],
@@ -173,7 +173,7 @@
                 const uniqueChart = new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: ['Identity Theft', 'Courier Scams', 'Stock Investment', 'Business Investment'],
+                        labels: {!! $categoryNamesJson !!},
                         datasets: [{
                                 label: 'May',
                                 data: [26, 20, 25, 30],
@@ -509,13 +509,13 @@
                         scales: {
                             x: {
                                 display: true,
-                                max: 300
+                                max: 1500
                             },
                             y: {
                                 display: false, // Hide the bar titles
                                 beginAtZero: true,
                                 min: 0,
-                                max: 300,
+                                max: 1500,
                                 ticks: {
                                     display: false // Hide the ticks on the Y-axis
                                 }

@@ -29,4 +29,9 @@ class AdditionalInformation extends Model
         'Complainant_Name',
         'Complainant_Address'
     ];
+
+    protected $casts = [
+        'Incident_Date' => 'datetime',
+        'Complaint_Date' => 'datetime',
+    ];
 }

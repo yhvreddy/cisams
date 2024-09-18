@@ -41,8 +41,8 @@
                                 <td data-label="DATE Of REPORT">
                                     {{ date('d-m-Y', strtotime($ai->Complaint_Date)) }}</td>
                                 <td data-label="MO">{{ $ai->Category }}</td>
-                                <td data-label="AMOUNT LOST">{{ $ai->Fraudulent_Amount }}</td>
-                                <td data-label="AMOUNT POH">--</td>
+                                <td data-label="AMOUNT LOST">{{ $ai->amount_lost }}</td>
+                                <td data-label="AMOUNT POH">{{ $ai->amount_poh }}</td>
                                 <td data-label="FIR CONVERSION">
                                     @if (in_array($ai->Status, ['Registered', 'FIR Registered']))
                                         <a href="{{ route('fir-conversions.tc-yes', ['sno' => $ai->S_No]) }}"
@@ -62,6 +62,8 @@
                         @endforeach
                     </tbody>
                 </table>
+
+                {{ $allAdditionalInfo->links() }}
             </div>
         </div>
 
@@ -90,8 +92,8 @@
                                 <td data-label="DATE Of REPORT">
                                     {{ date('d-m-Y', strtotime($ai->Complaint_Date)) }}</td>
                                 <td data-label="MO">{{ $ai->Category }}</td>
-                                <td data-label="AMOUNT LOST">{{ $ai->Fraudulent_Amount }}</td>
-                                <td data-label="AMOUNT POH">--</td>
+                                <td data-label="AMOUNT LOST">{{ $ai->amount_lost }}</td>
+                                <td data-label="AMOUNT POH">{{ $ai->amount_poh }}</td>
                                 <td data-label="FIR CONVERSION">
                                     @if (in_array($ai->Status, ['Registered', 'FIR Registered']))
                                         <a href="{{ route('fir-conversions.tc-yes', ['sno' => $ai->S_No]) }}"
@@ -110,6 +112,8 @@
                         @endforeach
                     </tbody>
                 </table>
+
+                {{ $convertedAdditionalInfo->links() }}
             </div>
         </div>
 
@@ -138,8 +142,8 @@
                                 <td data-label="DATE Of REPORT">
                                     {{ date('d-m-Y', strtotime($ai->Complaint_Date)) }}</td>
                                 <td data-label="MO">{{ $ai->Category }}</td>
-                                <td data-label="AMOUNT LOST">{{ $ai->Fraudulent_Amount }}</td>
-                                <td data-label="AMOUNT POH">--</td>
+                                <td data-label="AMOUNT LOST">{{ $ai->amount_lost }}</td>
+                                <td data-label="AMOUNT POH">{{ $ai->amount_poh }}</td>
                                 <td data-label="FIR CONVERSION">
                                     @if (in_array($ai->Status, ['Registered', 'FIR Registered']))
                                         <a href="{{ route('fir-conversions.tc-yes', ['sno' => $ai->S_No]) }}"
@@ -158,6 +162,8 @@
                         @endforeach
                     </tbody>
                 </table>
+
+                {{ $pendingAdditionalInfo->links() }}
             </div>
         </div>
     </div>

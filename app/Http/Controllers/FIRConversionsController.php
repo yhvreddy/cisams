@@ -22,9 +22,18 @@ class FIRConversionsController extends Controller
 
     public function index(Request $request)
     {
-        $allAdditionalInfo = $this->additionalInformation->limit(50)->get();
-        $convertedAdditionalInfo = $this->additionalInformation->whereIn('status', ['Registered', 'FIR Registered'])->limit(50)->get();
-        $pendingAdditionalInfo = $this->additionalInformation->whereNotIn('status', ['Registered', 'FIR Registered', 'Closed'])->limit(20)->get();
+        $allAdditionalInfo = $this->additionalInformation->join('Sample_Total_POH', 'Sample_Total_POH.NCRP Ack No ', 'Sample_Additional_Information.Acknowledgement_No')
+            ->select('Sample_Additional_Information.*', 'Sample_Total_POH.Amount Lost as amount_lost', 'Sample_Total_POH.Amount POH as amount_poh')
+            ->paginate();
+
+        $convertedAdditionalInfo = $this->additionalInformation->join('Sample_Total_POH', 'Sample_Total_POH.NCRP Ack No ', 'Sample_Additional_Information.Acknowledgement_No')
+            ->select('Sample_Additional_Information.*', 'Sample_Total_POH.Amount Lost as amount_lost', 'Sample_Total_POH.Amount POH as amount_poh')
+            ->whereIn('Sample_Additional_Information.status', ['Registered', 'FIR Registered'])
+            ->paginate();
+
+        $pendingAdditionalInfo = $this->additionalInformation->join('Sample_Total_POH', 'Sample_Total_POH.NCRP Ack No ', 'Sample_Additional_Information.Acknowledgement_No')
+            ->select('Sample_Additional_Information.*', 'Sample_Total_POH.Amount Lost as amount_lost', 'Sample_Total_POH.Amount POH as amount_poh')
+            ->whereNotIn('Sample_Additional_Information.status', ['Registered', 'FIR Registered', 'Closed'])->paginate();
         return view('pages.fir-conversions.index', compact('allAdditionalInfo', 'convertedAdditionalInfo', 'pendingAdditionalInfo'));
     }
 
