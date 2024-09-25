@@ -175,22 +175,22 @@
                     data: {
                         labels: {!! $categoryNamesJson !!},
                         datasets: [{
-                                label: 'May',
-                                data: [26, 20, 25, 30],
+                                label: '{{ $lastThreeMonths[0] }}',
+                                data: {!! $monthDataJson[$lastThreeMonths[0]] !!},
                                 backgroundColor: '#375CE1',
                                 borderRadius: 10, // Rounded top corners
                                 borderWidth: 0
                             },
                             {
-                                label: 'June',
-                                data: [22, 18, 20, 28],
+                                label: '{{ $lastThreeMonths[1] }}',
+                                data: {!! $monthDataJson[$lastThreeMonths[1]] !!},
                                 backgroundColor: '#C6D2FF',
                                 borderRadius: 10, // Rounded top corners
                                 borderWidth: 0
                             },
                             {
-                                label: 'July',
-                                data: [30, 24, 20, 40],
+                                label: '{{ $lastThreeMonths[2] }}',
+                                data: {!! $monthDataJson[$lastThreeMonths[2]] !!},
                                 backgroundColor: '#092081',
                                 borderRadius: 10, // Rounded top corners
                                 borderWidth: 0
@@ -278,24 +278,24 @@
                     const uniqueChartTwoCols = new Chart(ctx, {
                         type: 'bar',
                         data: {
-                            labels: ['Amount Lost > 1 Lakh', 'POH > 25000'],
+                            labels: @json($firConversionData['categories']),
                             datasets: [{
                                     label: 'Total Complaints',
-                                    data: [150, 200],
+                                    data: @json($firConversionData['total_complaints']),
                                     backgroundColor: '#375CE1',
                                     borderRadius: 10, // Rounded top corners
                                     borderWidth: 0
                                 },
                                 {
                                     label: 'FIR Converted',
-                                    data: [100, 180],
+                                    data: @json($firConversionData['fir_converted']),
                                     backgroundColor: '#C6D2FF',
                                     borderRadius: 10, // Rounded top corners
                                     borderWidth: 0
                                 },
                                 {
                                     label: 'Pending Conversion',
-                                    data: [120, 220],
+                                    data: @json($firConversionData['pending_conversion']),
                                     backgroundColor: '#092081',
                                     borderRadius: 10, // Rounded top corners
                                     borderWidth: 0

@@ -33,10 +33,10 @@ class LoginRequest extends FormRequest
         ];
     }
 
-    protected function validateLoginId($value){
+    protected function validateLoginId($value)
+    {
         // Check if the login ID is an email
         $isEmail = filter_var($value, FILTER_VALIDATE_EMAIL) !== false;
-
         // Check for username or email existence in the users table
         $userExists = User::where($isEmail ? 'email' : 'username', $value)->exists();
 

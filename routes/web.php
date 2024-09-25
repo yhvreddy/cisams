@@ -61,6 +61,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
                 Route::get('/evidence-gathered-no', 'FIRConversionsController@evNo')->name('ev-no');
                 Route::prefix('evidence-gathered')->group(function () {
                     Route::get('/whatsapp-pending', 'FIRConversionsController@whatsAppPending')->name('whatsapp-pending');
+                    Route::get('/generate-request/{requestId?}', 'FIRConversionsController@generateRequest')->name('generate-request');
+                    Route::post('/generate-request/{requestId}/', 'FIRConversionsController@saveGenerateRequest')->name('save.generate-request');
                 });
             });
 

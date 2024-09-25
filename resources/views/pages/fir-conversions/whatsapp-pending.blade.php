@@ -26,9 +26,12 @@
             <tbody class="wht-box ">
                 <tr>
                     <td data-label="S.No"> 1</td>
-                    <td data-label="HANDLE"></td>
+                    <td data-label="HANDLE">2344</td>
                     <td data-label="DATE Of REQUEST">23-07-2024</td>
-                    <td data-label="GENERATE REMINDER">GENERATE REQUEST</td>
+                    <td data-label="GENERATE REMINDER">
+                        <a href="{{ route('fir-conversions.generate-request', ['requestId' => 23]) }}"
+                            class="genera-button">GENERATE REQUEST</a>
+                    </td>
                 </tr>
 
                 <!-- Repeat rows as needed -->

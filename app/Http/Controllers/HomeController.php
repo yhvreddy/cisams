@@ -41,7 +41,6 @@ class HomeController extends Controller
     {
         try {
             $credentials = $this->getCredentials($request);
-
             // Attempt to log the user in
             if (Auth::attempt($credentials)) {
 
@@ -130,7 +129,7 @@ class HomeController extends Controller
         foreach ($categoryCounts as $categoryCount) {
             $categoryNames[] = $categoryCount->Category; // Add the category name to the array
         }
-        $categoryNamesJson = json_encode($categoryNames);
+        $allCategoryNamesJson = json_encode($categoryNames);
 
 
         // Fetch data for the last three months, grouped by category
@@ -140,7 +139,7 @@ class HomeController extends Controller
             ->groupBy('Category', 'incident_date')
             ->orderBy('incident_date', 'asc')
             ->get();
-        dd($categoryData);
+        // dd($categoryData);
         // Get the names of the last 3 months dynamically
         $lastThreeMonths = [
             Carbon::now()->subMonths(2)->format('F'),  // Two months ago
@@ -188,13 +187,91 @@ class HomeController extends Controller
         foreach ($lastThreeMonths as $month) {
             $monthDataJson[$month] = json_encode(array_values($monthlyData[$month]));
         }
-        dd($monthDataJson, $categoryData);
-        return view('pages.home', compact('ptWarrantCountsJSON', 'graphOneCountJson', 'nonFinancialChartJson', 'financialChartJson', 'categoryNamesJson'));
+        // dd($lastThreeMonths, $categoryNamesJson, $monthDataJson);
+
+        $firConversionData = $this->graph3Data();
+        return view('pages.home', compact('ptWarrantCountsJSON', 'graphOneCountJson', 'nonFinancialChartJson', 'financialChartJson', 'categoryNamesJson', 'monthDataJson', 'lastThreeMonths', 'firConversionData'));
     }
 
     public function logout()
     {
         Auth::logout();
         return redirect('/login');
+    }
+
+    public function graph3Data()
+    {
+        $firConversionData = $this->additionalInformation
+            ->join('Sample_Total_POH', 'Sample_Total_POH.NCRP Ack No', '=', 'Sample_Additional_Information.Acknowledgement_No')
+            ->select(
+                'Sample_Additional_Information.Acknowledgement_No',
+                'Sample_Total_POH.Amount Lost as amount_lost',
+                'Sample_Total_POH.Amount POH as amount_poh',
+                'Sample_Additional_Information.status'
+            )
+            ->get();
+
+        // Initialize arrays to hold counts
+        $amountLostMoreThanLakh = [
+            'total_complaints' => 0,
+            'fir_converted' => 0,
+            'pending_conversion' => 0
+        ];
+        $pohMoreThan25000 = [
+            'total_complaints' => 0,
+            'fir_converted' => 0,
+            'pending_conversion' => 0
+        ];
+
+        foreach ($firConversionData as $data) {
+            // Total Complaints Count
+            if ($data->amount_lost > 100000) {
+                $amountLostMoreThanLakh['total_complaints']++;
+            }
+
+            if ($data->amount_poh > 25000) {
+                $pohMoreThan25000['total_complaints']++;
+            }
+
+            // FIR Converted Count
+            if (in_array($data->status, ['Registered', 'FIR Registered'])) {
+                if ($data->amount_lost > 100000) {
+                    $amountLostMoreThanLakh['fir_converted']++;
+                }
+
+                if ($data->amount_poh > 25000) {
+                    $pohMoreThan25000['fir_converted']++;
+                }
+            }
+
+            // Pending Conversion Count
+            if (!in_array($data->status, ['Registered', 'FIR Registered', 'Closed'])) {
+                if ($data->amount_lost > 100000) {
+                    $amountLostMoreThanLakh['pending_conversion']++;
+                }
+
+                if ($data->amount_poh > 25000) {
+                    $pohMoreThan25000['pending_conversion']++;
+                }
+            }
+        }
+
+        // Prepare data for chart
+        $chartData = [
+            'categories' => ['Amount Lost > 1 Lakh', 'POH > 25000'],
+            'total_complaints' => [
+                $amountLostMoreThanLakh['total_complaints'],
+                $pohMoreThan25000['total_complaints']
+            ],
+            'fir_converted' => [
+                $amountLostMoreThanLakh['fir_converted'],
+                $pohMoreThan25000['fir_converted']
+            ],
+            'pending_conversion' => [
+                $amountLostMoreThanLakh['pending_conversion'],
+                $pohMoreThan25000['pending_conversion']
+            ]
+        ];
+        return $chartData;
     }
 }

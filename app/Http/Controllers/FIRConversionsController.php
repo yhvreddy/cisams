@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\AdditionalInformation;
 use App\Models\TotalPOH;
+use App\Mail\GenerateRequestMail;
+use Illuminate\Support\Facades\Mail;
 
 class FIRConversionsController extends Controller
 {
@@ -79,5 +81,20 @@ class FIRConversionsController extends Controller
     public function whatsAppPending(Request $request)
     {
         return view('pages.fir-conversions.whatsapp-pending');
+    }
+
+    public function generateRequest(Request $request)
+    {
+        return view('pages.fir-conversions.generate-request');
+    }
+
+    public function saveGenerateRequest(Request $request)
+    {
+        if (!isset($request->email)) {
+            return redirect()->back()->with('error', 'Email is required');
+        }
+
+        Mail::to($request->email)->send(new GenerateRequestMail());
+        return redirect()->back()->with('success', 'Email Sent Successfully!');
     }
 }
