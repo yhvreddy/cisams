@@ -22,8 +22,8 @@ class GenerateRequestMail extends Mailable
 
     public function build()
     {
-        return $this->from('no-reply@example.com')
-            ->subject('Your Subscription Status')
+        return $this->from('info@cisams.com')
+            ->subject('Application Report Request')
             ->view('emails.generate-request');
     }
 }
