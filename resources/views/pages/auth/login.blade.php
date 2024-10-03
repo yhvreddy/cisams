@@ -43,12 +43,12 @@
                             <span>{!! Captcha::img() !!}</span>
                         </div>
                     </div>
-                    <div class="col-auto" style="height: fit-content;">
+                    <div class="col-md-5" style="height: fit-content;">
                         <div class="input-group">
                             <input id="captcha" type="text" placeholder="Enter Captcha" name="captcha" />
                         </div>
                     </div>
-                    <div class="col-auto" style="height: fit-content;">
+                    <div class="col-md-2" style="height: fit-content;">
                         <button type="button" class="btn btn-success refresh-cpatcha"><i
                                 class="fa fa-refresh"></i></button>
                     </div>
