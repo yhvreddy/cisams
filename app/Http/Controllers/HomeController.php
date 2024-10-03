@@ -9,7 +9,7 @@ use Exception;
 use App\Traits\HandlesCustomExceptions;
 use App\Enums\AccountStatus;
 use App\Models\PTWarrants;
-use  App\Models\AdditionalInformation;
+use App\Models\AdditionalInformation;
 use Carbon\Carbon;
 
 class HomeController extends Controller
@@ -72,12 +72,12 @@ class HomeController extends Controller
     {
         $ptWarrant =
             $this->ptWarrants
-            ->selectRaw('
-                COUNT(CASE WHEN SOURCE = ? THEN 1 END) as fir_links_count,
-                COUNT(CASE WHEN SOURCE = ? THEN 1 END) as ncrp_links_count,
-                COUNT(CASE WHEN PT_EXECUTED != ? THEN 1 END) as pt_warranty_executed_count,
-                COUNT(CASE WHEN PT_EXECUTED = ? THEN 1 END) as pt_warranty_pending_count
-            ', ['FIR', 'NCRP', 'no', 'no'])
+            ->selectRaw("
+                COUNT(CASE WHEN SOURCE = 'FIR' THEN 1 END) AS fir_links_count,
+                COUNT(CASE WHEN SOURCE IN ('NCRP', 'CFCFRMS') THEN 1 END) AS ncrp_links_count,
+                COUNT(CASE WHEN PT_EXECUTED = 'Yes' THEN 1 END) AS pt_warranty_executed_count,
+                COUNT(CASE WHEN PT_EXECUTED = 'No' THEN 1 END) AS pt_warranty_pending_count
+            ")
             ->first();
         $ptWarrantCountsJSON = json_encode((array) [
             floatval($ptWarrant->fir_links_count ?? 0),

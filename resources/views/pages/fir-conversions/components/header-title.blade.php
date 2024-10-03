@@ -22,7 +22,7 @@
                 @endif
             @endif
 
-            <a href="{{ route('home') }}" class="btn-back" onclick="history.back()">
+            <a href="{{ $routeLink ?? route('home') }}" class="btn-back" onclick="history.back()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="13" height="12" fill="currentColor"
                     class="bi bi-arrow-left" viewBox="0 0 16 16">
                     <path fill-rule="evenodd"

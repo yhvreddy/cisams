@@ -34,7 +34,13 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
             Route::get('/non-financial', 'ComplaintsController@nonFinancial')->name('non-financial');
         });
 
-
+        Route::prefix('pt-warranty')->name('pt_warranty.')->group(function () {
+            Route::get('/fir-links', 'PTWarrantyController@firLinks')->name('fir-links');
+            Route::get('/ncrp-links', 'PTWarrantyController@ncrpLinks')->name('ncrp-links');
+            Route::get('/executed', 'PTWarrantyController@executed')->name('executed');
+            Route::get('/pending', 'PTWarrantyController@pending')->name('pending');
+            Route::get('/district/{district}/{type}', 'PTWarrantyController@districtData')->name('district.data');
+        });
 
         Route::prefix('hotspots')->name('hotspots.')->group(function () {
             Route::get('/', 'HotSpotsController@getHotSpots')->name('index');

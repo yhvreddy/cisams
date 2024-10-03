@@ -478,6 +478,12 @@
             </div>
 
             <script>
+                const ptWarrantyUrls = [
+                    "{{ route('pt_warranty.fir-links') }}", // URL for Fir Links
+                    "{{ route('pt_warranty.ncrp-links') }}", // URL for NCRP Links
+                    "{{ route('pt_warranty.executed') }}", // URL for PT Warrants Executed
+                    "{{ route('pt_warranty.pending') }}" // URL for PT Warrants Pending
+                ];
                 const ctxNewChart = document.getElementById('myNewChart').getContext('2d');
                 const myNewChartInstance = new Chart(ctxNewChart, {
                     type: 'bar',
@@ -552,7 +558,16 @@
                             }
                         },
                         maintainAspectRatio: false,
-                        responsive: true
+                        responsive: true,
+                        onClick: function(e) {
+                            const activePoints = myNewChartInstance.getElementsAtEventForMode(e, 'nearest', {
+                                intersect: true
+                            }, false);
+                            if (activePoints.length) {
+                                const index = activePoints[0].index;
+                                window.location.href = ptWarrantyUrls[index]; // Redirect to the corresponding URL
+                            }
+                        }
                     }
                 });
             </script>
