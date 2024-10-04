@@ -270,8 +270,23 @@ class HomeController extends Controller
             'pending_conversion' => [
                 $amountLostMoreThanLakh['pending_conversion'],
                 $pohMoreThan25000['pending_conversion']
+            ],
+            'urls' => [
+                'total_complaints' => [
+                    route('fir-conversions.list.type', ['listType' => 'total-complaints', 'category' => 'amount-lost-more-than-1-lakh']),
+                    route('fir-conversions.list.type', ['listType' => 'total-complaints', 'category' => 'poh-more-than-25000']),
+                ],
+                'fir_converted' => [
+                    route('fir-conversions.list.type', ['listType' => 'fir-converted', 'category' => 'amount-lost-more-than-1-lakh']),
+                    route('fir-conversions.list.type', ['listType' => 'fir-converted', 'category' => 'poh-more-than-25000']),
+                ],
+                'pending_conversion' => [
+                    route('fir-conversions.list.type', ['listType' => 'pending-conversions', 'category' => 'amount-lost-more-than-1-lakh']),
+                    route('fir-conversions.list.type', ['listType' => 'pending-conversions', 'category' => 'poh-more-than-25000']),
+                ]
             ]
         ];
+
         return $chartData;
     }
 }

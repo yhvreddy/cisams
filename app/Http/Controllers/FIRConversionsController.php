@@ -39,6 +39,20 @@ class FIRConversionsController extends Controller
         return view('pages.fir-conversions.index', compact('allAdditionalInfo', 'convertedAdditionalInfo', 'pendingAdditionalInfo'));
     }
 
+    public function firConversions($listType, Request $request)
+    {
+        $firConversionListing = $this->additionalInformation->join('Sample_Total_POH', 'Sample_Total_POH.NCRP Ack No ', 'Sample_Additional_Information.Acknowledgement_No')
+            ->select('Sample_Additional_Information.*', 'Sample_Total_POH.Amount Lost as amount_lost', 'Sample_Total_POH.Amount POH as amount_poh');
+        if ($listType == 'pending-conversions') {
+            $firConversionListing->whereNotIn('Sample_Additional_Information.status', ['Registered', 'FIR Registered', 'Closed']);
+        } elseif ($listType == 'fir-converted') {
+            $firConversionListing->whereIn('Sample_Additional_Information.status', ['Registered', 'FIR Registered']);
+        }
+        $firConversionListing = $firConversionListing->paginate(3);
+
+        return view('pages.fir-conversions.list', compact('firConversionListing'));
+    }
+
     public function tcYes(Request $request)
     {
         return view('pages.fir-conversions.tc-yes');

@@ -43,14 +43,17 @@
                             <span>{!! Captcha::img() !!}</span>
                         </div>
                     </div>
-                    <div class="col-md-5" style="height: fit-content;">
-                        <div class="input-group">
-                            <input id="captcha" type="text" placeholder="Enter Captcha" name="captcha" />
+                    <div class="col-auto" style="height: fit-content;">
+                        <div class="input-group mb-3">
+                            <input id="captcha" type="text" placeholder="Enter Captcha" name="captcha"
+                                aria-label="captcha" style="border-radius: unset !important;"
+                                aria-describedby="captcha-addon" />
+                            <div class="input-group-append">
+                                <button type="button" style="border-radius: unset !important;"
+                                    class="btn btn-success refresh-cpatcha"><i class="fa fa-refresh"
+                                        id="captcha-addon"></i></button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-2" style="height: fit-content;">
-                        <button type="button" class="btn btn-success refresh-cpatcha"><i
-                                class="fa fa-refresh"></i></button>
                     </div>
                     @error('captcha')
                         <div class="text-danger mb-3">{{ $errors->first('captcha') }}</div>

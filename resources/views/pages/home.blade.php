@@ -268,13 +268,12 @@
 
         <div class="col-md-4 box">
             <h5 class="titl"> FIR Conversions</h5>
-            <a href='{{ route('fir-conversions.complaints') }}'>
-                <canvas id="chartNik2024TwoCols" class="chart" style="height: 240px; width: 100%;"></canvas>
-            </a>
+            <canvas id="chartNik2024TwoCols" class="chart" style="height: 240px; width: 100%;"></canvas>
 
             <script>
                 (function() {
                     const ctx = document.getElementById('chartNik2024TwoCols').getContext('2d');
+                    const urls = @json($firConversionData['urls']); // URLs for navigation
                     const uniqueChartTwoCols = new Chart(ctx, {
                         type: 'bar',
                         data: {
@@ -362,6 +361,35 @@
                                         borderWidth: 1
                                     }
                                 }
+                            },
+                            // Handle click event for bar navigation
+                            onClick: (event) => {
+                                const elements = uniqueChartTwoCols.getElementsAtEventForMode(event, 'nearest', {
+                                    intersect: true
+                                }, true);
+
+                                if (elements.length > 0) {
+                                    const datasetIndex = elements[0]
+                                        .datasetIndex; // Which dataset (0 = Total Complaints, 1 = FIR Converted, 2 = Pending Conversion)
+                                    const index = elements[0]
+                                        .index; // Which bar within that dataset (e.g., Amount Lost > 1 Lakh or POH > 25000)
+
+                                    let url;
+                                    if (datasetIndex === 0) {
+                                        url = urls.total_complaints[index]; // URL for Total Complaints
+                                    } else if (datasetIndex === 1) {
+                                        url = urls.fir_converted[index]; // URL for FIR Converted
+                                    } else if (datasetIndex === 2) {
+                                        url = urls.pending_conversion[index]; // URL for Pending Conversion
+                                    }
+
+                                    if (url) {
+                                        window.location.href = url; // Redirect to the corresponding URL
+                                    }
+                                }
+                            },
+                            onHover: (event, chartElement) => {
+                                event.native.target.style.cursor = chartElement[0] ? 'pointer' : 'default';
                             }
                         }
                     });

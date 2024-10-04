@@ -31,26 +31,8 @@
                 const myChart = new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: ['Set1', 'Set2', 'Set3', 'Set4', 'Set5'],
-                        datasets: [{
-                                label: 'Set1',
-                                data: [140, 60, 67, 89, 57],
-                                backgroundColor: '#092081',
-                                borderRadius: 10 // Adjust the radius as needed
-                            },
-                            {
-                                label: 'Set2',
-                                data: [20, 70, 23, 45, 30],
-                                backgroundColor: '#375CE1',
-                                borderRadius: 10
-                            },
-                            {
-                                label: 'Set3',
-                                data: [100, 20, 29, 60, 80],
-                                backgroundColor: '#C6D2FF',
-                                borderRadius: 10
-                            }
-                        ]
+                        labels: {!! json_encode($labels) !!}, // Dynamic category labels (X-axis)
+                        datasets: {!! json_encode($datasets) !!} // Dynamic datasets
                     },
                     options: {
                         scales: {
@@ -73,47 +55,30 @@
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Cyber Stalking</th>
-                        <th>Cyber Bullying </th>
-                        <th>Defamation</th>
-                        <th>Child Abuse </th>
-                        <th>Others</th>
-
+                        @foreach ($labels as $label)
+                            <th>{{ $label }}</th>
+                        @endforeach
                     </tr>
                 </thead>
                 <tbody class="wht-box ">
                     <tr>
-                        <td data-label="S.No"><img src="{{ url('assets/images/blue1.png') }}" class="blu"> Complaints
-                        </td>
-                        <td data-label="NCRP NO">150</td>
-                        <td data-label="DATE Of REPORT">45</td>
-                        <td data-label="POLICE STATION">80</td>
-                        <td data-label="MO">25</td>
-                        <td data-label="AMOUNT LOST">10</td>
-
+                        <td><img src="{{ url('assets/images/blue1.png') }}" class="blu"> Complaints</td>
+                        @foreach ($datasets[0]['data'] as $count)
+                            <td data-label="">{{ $count }}</td>
+                        @endforeach
                     </tr>
                     <tr>
-                        <td data-label="S.No"><img src="{{ url('assets/images/blue2.png') }}" class="blu1"> Fir
-                            Conversion</td>
-                        <td data-label="NCRP NO">35</td>
-                        <td data-label="DATE Of REPORT">55</td>
-                        <td data-label="POLICE STATION">15</td>
-                        <td data-label="MO">25</td>
-                        <td data-label="AMOUNT LOST">5</td>
-
+                        <td><img src="{{ url('assets/images/blue2.png') }}" class="blu1"> FIR Conversion</td>
+                        @foreach ($datasets[1]['data'] as $count)
+                            <td data-label="">{{ $count }}</td>
+                        @endforeach
                     </tr>
-
                     <tr>
-                        <td data-label="S.No"><img src="{{ url('assets/images/blue3.png') }}" class="blu">Fir Pending
-                        </td>
-                        <td data-label="NCRP NO">65</td>
-                        <td data-label="DATE Of REPORT">35</td>
-                        <td data-label="POLICE STATION">6</td>
-                        <td data-label="MO">34</td>
-                        <td data-label="AMOUNT LOST">7</td>
-
+                        <td><img src="{{ url('assets/images/blue3.png') }}" class="blu"> FIR Pending</td>
+                        @foreach ($datasets[2]['data'] as $count)
+                            <td data-label="">{{ $count }}</td>
+                        @endforeach
                     </tr>
-
                 </tbody>
             </table>
         </div>
