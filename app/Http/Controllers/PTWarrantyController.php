@@ -145,7 +145,7 @@ class PTWarrantyController extends Controller
             $listingData->where('PT_EXECUTED', 'No');
         }
 
-        $listingData = $listingData->get();
+        $listingData = $listingData->paginate(20);
 
         return view('pages.pt-warranty.districts_data', compact('listingData', 'district', 'typeName', 'type'));
     }

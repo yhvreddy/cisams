@@ -42,6 +42,8 @@
                 @endforeach
             </tbody>
         </table>
+
+        {{ $listingData->links() }}
     </div>
 
 @endsection

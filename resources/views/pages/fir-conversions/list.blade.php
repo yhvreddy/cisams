@@ -8,9 +8,9 @@
 
 @section('content')
     <div class="row ">
-        <h4 class="fir-head">FIR Conversions</h4>
+        <h4 class="fir-head">{{ $listName }} - FIR Conversions</h4>
 
-        <div class="container mt-5">
+        <div class="container">
             <table class="table">
                 <thead class="rounded-header">
                     <tr>

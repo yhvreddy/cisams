@@ -41,16 +41,19 @@ class FIRConversionsController extends Controller
 
     public function firConversions($listType, Request $request)
     {
+        $listName = 'Total Complaints';
         $firConversionListing = $this->additionalInformation->join('Sample_Total_POH', 'Sample_Total_POH.NCRP Ack No ', 'Sample_Additional_Information.Acknowledgement_No')
             ->select('Sample_Additional_Information.*', 'Sample_Total_POH.Amount Lost as amount_lost', 'Sample_Total_POH.Amount POH as amount_poh');
         if ($listType == 'pending-conversions') {
             $firConversionListing->whereNotIn('Sample_Additional_Information.status', ['Registered', 'FIR Registered', 'Closed']);
+            $listName = 'Pending Conversions';
         } elseif ($listType == 'fir-converted') {
             $firConversionListing->whereIn('Sample_Additional_Information.status', ['Registered', 'FIR Registered']);
+            $listName = 'FIR Converted';
         }
-        $firConversionListing = $firConversionListing->paginate(3);
+        $firConversionListing = $firConversionListing->paginate(20);
 
-        return view('pages.fir-conversions.list', compact('firConversionListing'));
+        return view('pages.fir-conversions.list', compact('firConversionListing', 'listName'));
     }
 
     public function tcYes(Request $request)
