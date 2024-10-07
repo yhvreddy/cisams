@@ -610,34 +610,36 @@
                 const myRefundChart = new Chart(ctxRefundChart, {
                     type: 'bar',
                     data: {
-                        labels: ['POH-<25000', 'POH-FIR'],
+                        labels: ['Refund Orders Pending', 'Refund Orders Received', 'Refund Petitions Pending',
+                            'Refund Petitions Filed', 'Total Cases'
+                        ],
                         datasets: [{
                                 label: 'Refund Orders Pending',
-                                data: [50, 60],
+                                data: [parseInt("{{ $refundData['refundOrderPending'] }}"), 0, 0, 0, 0],
                                 backgroundColor: '#375CE1',
                                 borderRadius: 10
                             },
                             {
                                 label: 'Refund Orders Received',
-                                data: [75, 70],
+                                data: [0, parseInt("{{ $refundData['refundOrderReceived'] }}"), 0, 0, 0],
                                 backgroundColor: '#C6D2FF',
                                 borderRadius: 10
                             },
                             {
                                 label: 'Refund Petitions Pending',
-                                data: [65, 20],
+                                data: [0, 0, parseInt("{{ $refundData['refundPetitionPending'] }}"), 0, 0],
                                 backgroundColor: '#092081',
                                 borderRadius: 10
                             },
                             {
                                 label: 'Refund Petitions Filed',
-                                data: [85, 40],
+                                data: [0, 0, 0, parseInt("{{ $refundData['refundPetitionFiled'] }}"), 0],
                                 backgroundColor: '#000000',
                                 borderRadius: 10
                             },
                             {
                                 label: 'Total Cases',
-                                data: [105, 110],
+                                data: [0, 0, 0, 0, parseInt("{{ $refundData['refundTotalCases'] }}")],
                                 backgroundColor: '#092081',
                                 borderRadius: 10
                             }

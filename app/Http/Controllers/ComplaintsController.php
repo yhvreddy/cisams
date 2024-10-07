@@ -69,7 +69,11 @@ class ComplaintsController extends Controller
             ]
         ];
 
-        return view('pages.complaints.financial', compact('labels', 'datasets'));
+        // Merge all arrays into one
+        $allData = array_merge($complaintsData, $firConversionData, $firPendingData);
+        $maxValue = max($allData) ?? 100;
+
+        return view('pages.complaints.financial', compact('labels', 'datasets', 'maxValue'));
     }
     public function nonFinancial(Request $request)
     {
@@ -125,8 +129,10 @@ class ComplaintsController extends Controller
             ]
         ];
 
-
+        // Merge all arrays into one
+        $allData = array_merge($complaintsData, $firConversionData, $firPendingData);
+        $maxValue = max($allData) ?? 100;
         // dd($complaints, $firConversion, $firPending, $sets);
-        return view('pages.complaints.non-financial', compact('labels', 'datasets'));
+        return view('pages.complaints.non-financial', compact('labels', 'datasets', 'maxValue'));
     }
 }

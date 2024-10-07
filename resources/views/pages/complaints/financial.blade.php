@@ -39,7 +39,7 @@
                             y: {
                                 beginAtZero: true,
                                 min: 0,
-                                max: 160,
+                                max: parseInt("{{ $maxValue }}") + 10,
                             }
                         },
                         plugins: {

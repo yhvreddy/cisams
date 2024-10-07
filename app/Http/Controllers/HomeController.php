@@ -9,8 +9,10 @@ use Exception;
 use App\Traits\HandlesCustomExceptions;
 use App\Enums\AccountStatus;
 use App\Models\PTWarrants;
+use App\Models\LokAdalatRefundFIR;
 use App\Models\AdditionalInformation;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -18,13 +20,16 @@ class HomeController extends Controller
 
     protected PTWarrants $ptWarrants;
     protected AdditionalInformation $additionalInformation;
+    protected LokAdalatRefundFIR $refundFir;
 
     public function __construct(
         PTWarrants $_ptWarrants,
-        AdditionalInformation $_additionalInformation
+        AdditionalInformation $_additionalInformation,
+        LokAdalatRefundFIR $_refundFir
     ) {
         $this->ptWarrants = $_ptWarrants;
         $this->additionalInformation = $_additionalInformation;
+        $this->refundFir = $_refundFir;
     }
 
 
@@ -190,7 +195,43 @@ class HomeController extends Controller
         // dd($lastThreeMonths, $categoryNamesJson, $monthDataJson);
 
         $firConversionData = $this->graph3Data();
-        return view('pages.home', compact('ptWarrantCountsJSON', 'graphOneCountJson', 'nonFinancialChartJson', 'financialChartJson', 'categoryNamesJson', 'monthDataJson', 'lastThreeMonths', 'firConversionData'));
+
+        //graph six
+        $refundData = $this->refundFir
+            ->select(
+                '457 CrPC (Annexure-I)_Petition filed by Victim in court Date (DD/MM/YYYY) as petition_filed_victim_court_date',
+                'Annexure-III_Court Order Received Date (DD/MM/YYYY) as court_order_received_date'
+            )
+            ->get();
+        $refundOrderPending = 0;
+        $refundOrderReceived = 0;
+        $refundPetitionPending = 0;
+        $refundPetitionFiled = 0;
+        $refundTotalCases = 0;
+        foreach ($refundData as $key => $refund) {
+            if (!empty($refund->petition_filed_victim_court_date)) {
+                $refundPetitionFiled = $refundPetitionFiled + 1;
+            } elseif (empty($refund->petition_filed_victim_court_date)) {
+                $refundPetitionPending = $refundPetitionPending + 1;
+            }
+
+            if (empty($refund->court_order_received_date)) {
+                $refundOrderPending = $refundOrderPending + 1;
+            } elseif (!empty($refund->court_order_received_date)) {
+                $refundOrderReceived = $refundOrderReceived + 1;
+            }
+        }
+
+        $refundTotalCases = $refundOrderPending + $refundOrderReceived + $refundPetitionFiled + $refundPetitionPending;
+        $refundData = [
+            'refundTotalCases' => $refundTotalCases,
+            'refundOrderPending' => $refundOrderPending,
+            'refundOrderReceived'   =>  $refundOrderReceived,
+            'refundPetitionFiled'   =>  $refundPetitionFiled,
+            'refundPetitionPending' => $refundPetitionPending
+        ];
+
+        return view('pages.home', compact('ptWarrantCountsJSON', 'graphOneCountJson', 'nonFinancialChartJson', 'financialChartJson', 'categoryNamesJson', 'monthDataJson', 'lastThreeMonths', 'firConversionData', 'refundData'));
     }
 
     public function logout()
@@ -217,6 +258,7 @@ class HomeController extends Controller
             'fir_converted' => 0,
             'pending_conversion' => 0
         ];
+
         $pohMoreThan25000 = [
             'total_complaints' => 0,
             'fir_converted' => 0,
