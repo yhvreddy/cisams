@@ -33,7 +33,7 @@
     ])
 
     <div>
-        <div id="map"></div>
+        <div id="map" style="height: 940px;"></div>
     </div>
 
     {{-- @php(dd($locationsJson)) --}}
@@ -64,8 +64,8 @@
                     map: map,
                     title: location.title,
                     icon: {
-                        url: 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png', // Default Google Maps marker URL
-                        scaledSize: new google.maps.Size(20, 25) // Adjust the size (width, height)
+                        url: "{{ asset('assets/icons/Pin.svg') }}", // Default Google Maps marker URL
+                        scaledSize: new google.maps.Size(16, 16) // Adjust the size (width, height)
                     }
                 });
 
