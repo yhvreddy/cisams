@@ -3,6 +3,27 @@
 @section('title', 'Hotsports')
 
 @section('styles')
+    <style>
+        .custom-info-window {
+            width: 280px;
+            /* Set the width of the InfoWindow */
+            height: auto;
+            /* Height can adjust based on content, or set a specific height if needed */
+            overflow-y: auto;
+            /* Add scrollbar if content overflows */
+            font-size: 14px;
+        }
+
+        .custom-info-window h4 {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .custom-info-window p {
+            margin: 5px 0 0;
+            font-size: 12px;
+        }
+    </style>
 @endsection
 
 
@@ -41,11 +62,20 @@
                         lng: location.lng
                     },
                     map: map,
-                    title: location.title
+                    title: location.title,
+                    icon: {
+                        url: 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi.png', // Default Google Maps marker URL
+                        scaledSize: new google.maps.Size(20, 25) // Adjust the size (width, height)
+                    }
                 });
 
                 const infoWindow = new google.maps.InfoWindow({
-                    content: `<h4>${location.title}</h4><p>${location.address}</p>`
+                    content: `
+                        <div class="custom-info-window">
+                            <h4>${location.title}</h4>
+                            <p>${location.address}</p>
+                        </div>
+                        `
                 });
 
                 // Add a click event listener to each marker to open the info window
