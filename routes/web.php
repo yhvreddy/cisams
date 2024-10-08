@@ -56,7 +56,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         });
 
         Route::prefix('fir-conversions')->name('fir-conversions.')->group(function () {
-            Route::get('/{listType}', 'FIRConversionsController@firConversions')->name('list.type');
+            Route::get('/{listType}/{basedOn}', 'FIRConversionsController@firConversions')->name('list.type');
+            Route::get('{district}/{listType}/{basedOn}', 'FIRConversionsController@firConversionDistrict')->name('list.district.type');
             Route::get('/', 'FIRConversionsController@index')->name('complaints');
 
             Route::get('/fir-conversions-yes', 'FIRConversionsController@tcYes')->name('tc-yes');

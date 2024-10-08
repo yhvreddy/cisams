@@ -315,16 +315,16 @@ class HomeController extends Controller
             ],
             'urls' => [
                 'total_complaints' => [
-                    route('fir-conversions.list.type', ['listType' => 'total-complaints', 'category' => 'amount-lost-more-than-1-lakh']),
-                    route('fir-conversions.list.type', ['listType' => 'total-complaints', 'category' => 'poh-more-than-25000']),
+                    route('fir-conversions.list.type', ['listType' => 'total-complaints', 'basedOn' => 'amount-lost-more-than-one-lakh']),
+                    route('fir-conversions.list.type', ['listType' => 'total-complaints', 'basedOn' => 'poh-more-than-25000']),
                 ],
                 'fir_converted' => [
-                    route('fir-conversions.list.type', ['listType' => 'fir-converted', 'category' => 'amount-lost-more-than-1-lakh']),
-                    route('fir-conversions.list.type', ['listType' => 'fir-converted', 'category' => 'poh-more-than-25000']),
+                    route('fir-conversions.list.type', ['listType' => 'fir-converted', 'basedOn' => 'amount-lost-more-than-one-lakh']),
+                    route('fir-conversions.list.type', ['listType' => 'fir-converted', 'basedOn' => 'poh-more-than-25000']),
                 ],
                 'pending_conversion' => [
-                    route('fir-conversions.list.type', ['listType' => 'pending-conversions', 'category' => 'amount-lost-more-than-1-lakh']),
-                    route('fir-conversions.list.type', ['listType' => 'pending-conversions', 'category' => 'poh-more-than-25000']),
+                    route('fir-conversions.list.type', ['listType' => 'pending-conversions', 'basedOn' => 'amount-lost-more-than-one-lakh']),
+                    route('fir-conversions.list.type', ['listType' => 'pending-conversions', 'basedOn' => 'poh-more-than-25000']),
                 ]
             ]
         ];

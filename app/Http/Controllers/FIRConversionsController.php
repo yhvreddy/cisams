@@ -7,6 +7,7 @@ use App\Models\AdditionalInformation;
 use App\Models\TotalPOH;
 use App\Mail\GenerateRequestMail;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
 
 class FIRConversionsController extends Controller
 {
@@ -39,10 +40,55 @@ class FIRConversionsController extends Controller
         return view('pages.fir-conversions.index', compact('allAdditionalInfo', 'convertedAdditionalInfo', 'pendingAdditionalInfo'));
     }
 
-    public function firConversions($listType, Request $request)
+    public function firConversions($listType, $basedOn, Request $request)
+    {
+
+        $listName = 'Total Complaints';
+        $firConversionListing = $this->additionalInformation
+            ->join('Sample_Total_POH', 'Sample_Total_POH.NCRP Ack No', '=', 'Sample_Additional_Information.Acknowledgement_No')
+            ->select('Sample_Additional_Information.District_Name', DB::raw('COUNT(Sample_Additional_Information.Acknowledgement_No) as total_cases'))
+            ->groupBy('Sample_Additional_Information.District_Name');
+
+        // Apply filters based on list type
+        if ($listType == 'pending-conversions') {
+            $firConversionListing->whereNotIn('Sample_Additional_Information.status', ['Registered', 'FIR Registered', 'Closed']);
+            $listName = 'Pending Conversions';
+        } elseif ($listType == 'fir-converted') {
+            $firConversionListing->whereIn('Sample_Additional_Information.status', ['Registered', 'FIR Registered']);
+            $listName = 'FIR Converted';
+        }
+
+        $districtWiseData = $firConversionListing->get();
+
+        $labels = [];
+        $casesData = [];
+        $colors = []; // Array to hold dynamic colors
+        $districtWiseUrls = [];
+        foreach ($districtWiseData as $data) {
+            $labels[] = $data->District_Name; // District names for the graph labels
+            $casesData[] = $data->total_cases; // Case count for each district
+            $districtWiseUrls[] =
+                route('fir-conversions.list.district.type', [
+                    'district' => $data->District_Name,
+                    'listType' => $listType,
+                    'basedOn' => $basedOn
+                ]);
+        }
+
+        // Generate dynamic colors for each district
+        $colors = array_map(function () {
+            return sprintf('#%06X', mt_rand(0, 0xFFFFFF)); // Random hex color
+        }, $labels);
+
+        return view('pages.fir-conversions.district-links', compact('listName', 'listType', 'basedOn', 'labels', 'casesData', 'colors', 'districtWiseUrls'));
+    }
+
+    public function firConversionDistrict($district, $listType, $basedOn, Request $request)
     {
         $listName = 'Total Complaints';
-        $firConversionListing = $this->additionalInformation->join('Sample_Total_POH', 'Sample_Total_POH.NCRP Ack No ', 'Sample_Additional_Information.Acknowledgement_No')
+        $firConversionListing = $this->additionalInformation
+            ->join('Sample_Total_POH', 'Sample_Total_POH.NCRP Ack No ', 'Sample_Additional_Information.Acknowledgement_No')
+            ->where('Sample_Additional_Information.District_Name', $district)
             ->select('Sample_Additional_Information.*', 'Sample_Total_POH.Amount Lost as amount_lost', 'Sample_Total_POH.Amount POH as amount_poh');
         if ($listType == 'pending-conversions') {
             $firConversionListing->whereNotIn('Sample_Additional_Information.status', ['Registered', 'FIR Registered', 'Closed']);
