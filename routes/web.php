@@ -19,6 +19,10 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
+Route::get('/info', function () {
+    echo phpinfo();
+});
+
 Route::get('captcha/{config?}', '\Mews\Captcha\CaptchaController@getCaptcha')->name('generate.captcha');
 
 Route::group(['namespace' => 'App\Http\Controllers'], function () {
