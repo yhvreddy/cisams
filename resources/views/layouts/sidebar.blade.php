@@ -15,7 +15,7 @@
                 <img src="{{ url('assets/images/hotspot.svg') }}" class="icond">Hotspots
             </div>
         </a>
-        <a href="#">
+        <a href="{{ route('habitual.index') }}">
             <div class="icon-container">
                 <img src="{{ url('assets/images/habitual.svg') }}" class="icond">Habitual Offenders
             </div>

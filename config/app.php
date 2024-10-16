@@ -196,6 +196,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Mews\Captcha\CaptchaServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
     ],
 
     /*

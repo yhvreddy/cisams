@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\AdditionalInformation;
 use App\Models\TotalPOH;
 use App\Mail\GenerateRequestMail;
+use App\Mail\CDRGenerateRequestMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 
@@ -99,12 +100,12 @@ class FIRConversionsController extends Controller
         }
         $firConversionListing = $firConversionListing->paginate(20);
 
-        return view('pages.fir-conversions.list', compact('firConversionListing', 'listName'));
+        return view('pages.fir-conversions.list', compact('firConversionListing', 'listName', 'district', 'listType', 'basedOn'));
     }
 
-    public function tcYes(Request $request)
+    public function tcYes($district, $listType, Request $request)
     {
-        return view('pages.fir-conversions.tc-yes');
+        return view('pages.fir-conversions.tc-yes', compact('district', 'listType'));
     }
 
     public function roPending(Request $request)
@@ -141,14 +142,14 @@ class FIRConversionsController extends Controller
         return view('pages.fir-conversions.eg-no');
     }
 
-    public function whatsAppPending(Request $request)
+    public function whatsAppPending($type, Request $request)
     {
-        return view('pages.fir-conversions.whatsapp-pending');
+        return view('pages.fir-conversions.whatsapp-pending', compact('type'));
     }
 
-    public function generateRequest(Request $request)
+    public function generateRequest($type, Request $request)
     {
-        return view('pages.fir-conversions.generate-request');
+        return view('pages.fir-conversions.generate-request', compact('type'));
     }
 
     public function saveGenerateRequest(Request $request)
@@ -157,7 +158,12 @@ class FIRConversionsController extends Controller
             return redirect()->back()->with('error', 'Email is required');
         }
 
-        Mail::to($request->email)->send(new GenerateRequestMail());
+        if ($request->type == 'cdr') {
+            Mail::to($request->email)->send(new CDRGenerateRequestMail());
+        } else {
+            Mail::to($request->email)->send(new GenerateRequestMail()); // send email
+        }
+        dd("===");
         return redirect()->back()->with('success', 'Email Sent Successfully!');
     }
 }

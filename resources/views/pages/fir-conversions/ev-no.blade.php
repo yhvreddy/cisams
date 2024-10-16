@@ -30,21 +30,27 @@
                 <tr>
                     <td data-label="S.No"> 1</td>
                     <td data-label="CDR/CAF">
-                        <btn class="border-button">Yes</btn>
+                        <a href="{{ route('fir-conversions.whatsapp-pending', ['type' => 'cdr']) }}"
+                            class="border-button">No</a>
                     </td>
                     <td data-label="IPDR">
-                        <btn class="borderr-button">No</btn>
+                        <a href="{{ route('fir-conversions.whatsapp-pending', ['type' => 'ipdr']) }}"
+                            class="border-button">No</a>
                     </td>
-                    <td data-label="WHATSAPP"><a href="{{ route('fir-conversions.whatsapp-pending') }}"
-                            class="pink-btn">Pending</a> </td>
+                    <td data-label="WHATSAPP">
+                        <a href="{{ route('fir-conversions.whatsapp-pending', ['type' => 'whatsapp']) }}"
+                            class="pink-btn">No</a>
+                    </td>
                     <td data-label="SM HANDLES">
                         <btn class="borderr-button">No</btn>
                     </td>
                     <td data-label="KYC">
-                        <btn class="borderr-button">No</btn>
+                        <a href="{{ route('fir-conversions.whatsapp-pending', ['type' => 'kyc']) }}"
+                            class="borderr-button">No</a>
                     </td>
                     <td data-label="BANK STATEMENTS">
-                        <btn class="border-button">Yes</btn>
+                        <a href="{{ route('fir-conversions.whatsapp-pending', ['type' => 'soa']) }}"
+                            class="borderr-button">No</a>
                     </td>
 
                 </tr>

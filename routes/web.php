@@ -60,11 +60,13 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         });
 
         Route::prefix('fir-conversions')->name('fir-conversions.')->group(function () {
+            Route::get('/', 'FIRConversionsController@index')->name('complaints'); // not Using
             Route::get('/{listType}/{basedOn}', 'FIRConversionsController@firConversions')->name('list.type');
             Route::get('{district}/{listType}/{basedOn}', 'FIRConversionsController@firConversionDistrict')->name('list.district.type');
-            Route::get('/', 'FIRConversionsController@index')->name('complaints');
+        });
 
-            Route::get('/fir-conversions-yes', 'FIRConversionsController@tcYes')->name('tc-yes');
+        Route::prefix('fir-conversion')->name('fir-conversions.')->group(function () {
+            Route::get('{district}/{listType}/fir-conversions-yes', 'FIRConversionsController@tcYes')->name('tc-yes');
             Route::prefix('fir-conversions')->group(function () {
                 Route::get('/refund-order-pending', 'FIRConversionsController@roPending')->name('ro-pending');
                 Route::get('/fir-update', 'FIRConversionsController@ufUpdate')->name('uf-update');
@@ -72,9 +74,9 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
 
                 Route::get('/evidence-gathered-no', 'FIRConversionsController@evNo')->name('ev-no');
                 Route::prefix('evidence-gathered')->group(function () {
-                    Route::get('/whatsapp-pending', 'FIRConversionsController@whatsAppPending')->name('whatsapp-pending');
-                    Route::get('/generate-request/{requestId?}', 'FIRConversionsController@generateRequest')->name('generate-request');
-                    Route::post('/generate-request/{requestId}/', 'FIRConversionsController@saveGenerateRequest')->name('save.generate-request');
+                    Route::get('/whatsapp-pending/{type?}', 'FIRConversionsController@whatsAppPending')->name('whatsapp-pending');
+                    Route::get('/generate-request/{type?}/{requestId?}', 'FIRConversionsController@generateRequest')->name('generate-request');
+                    Route::post('/generate-request/{type}/{requestId}/', 'FIRConversionsController@saveGenerateRequest')->name('save.generate-request');
                 });
             });
 
@@ -89,6 +91,10 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
 
         Route::prefix('search')->name('search.')->group(function () {
             Route::get('/', 'SearchController@index')->name('index');
+        });
+
+        Route::prefix('habitual-offenders')->name('habitual.')->group(function () {
+            Route::get('/', 'HabitualOffendersController@index')->name('index');
         });
     });
 

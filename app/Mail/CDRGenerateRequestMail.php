@@ -8,7 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
-class GenerateRequestMail extends Mailable
+class CDRGenerateRequestMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -24,11 +24,11 @@ class GenerateRequestMail extends Mailable
     public function build()
     {
         // Generate PDF from view in-memory
-        $pdf = PDF::loadView('emails.generate-request'); // , $this->data
+        $pdf = PDF::loadView('emails.cdr-generate-request')->setPaper('A4', 'landscape'); // , $this->data
 
         return $this->from('info@cisams.com')
-            ->subject('Application Report Request')
-            ->view('emails.generate-request')
+            ->subject('CDR Report Request')
+            ->view('emails.cdr-generate-request')
             ->attachData($pdf->output(), 'document.pdf', [
                 'mime' => 'application/pdf',
             ]); // Attach PDF without storing it;
