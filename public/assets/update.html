@@ -1,0 +1,247 @@
+ <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>CISAMS</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/css/bootstrap.min.css"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+
+
+
+
+
+</head>
+
+
+
+
+
+
+<body>
+
+  <!--header area start-->
+  <header>
+    <nav class="navbar">
+
+      <a href="#"><img src="images/logo.png"></a>
+
+      <span class="nv-text">Cybercrime Investigation Support, Analysis and Monitoring System</span>
+
+
+
+      <ul class="navbar-menu " id="navbar-menu">
+        <li class="navbar-item">
+          <a class="navbar-link" href="#"><img src="images/bell.svg" class="icon"></a>
+        </li>
+
+        <li class="navbar-item">
+          <a class="navbar-link" href="#"><img src="images/sett.svg" class="icon"></a>
+        </li>
+
+        <li class="navbar-item">
+          <a class="navbar-link" href="#"><img src="images/pro-img.png" class="profile"></a>
+        </li>
+
+        <li class="navbar-item ">
+          <a class="navbar-toggle dropdown-toggle" href="#">
+
+            <span class="text-container">
+              Sanjay Reddy<br><span class="addi">Additional SP</span>
+            </span>
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Profile</a>
+            <a class="dropdown-item" href="#">Settings</a>
+            <a class="dropdown-item" href="#">Logout</a>
+          </div>
+        </li>
+
+      </ul>
+    </nav>
+
+  </header>
+
+
+
+  <!--header area end-->
+ <div class="hamburger" id="hamburger-menu">
+    <img src="images/menu_icon.jpg" alt="Menu">
+  </div>
+
+
+  <!--mobile navigation bar start-->
+  <div class="mobile_nav_items" id="mobile-nav">
+    <a ><img src="images/pro-img.png" class="profile-m">
+      <span class="pro-name">
+        Sanjay Reddy<br><span class="addi-m">Additional SP</span>
+      </span>
+    </a>
+
+    <hr class="line1">
+    <a href="#"><img src="images/home.svg" class="icond">Home</a>
+    <a href="#"><img src="images/search1.svg" class="icond">Search</a>
+    <a href="#"><img src="images/hotspot.svg" class="icond">Hotspots</a>
+    <a href="#"><img src="images/habitual.svg" class="icond">Habitual Offenders</a>
+    <a href="#"><img src="images/data-entry.svg" class="icond">Data Entry</a>
+    <a href="#"> <img src="images/pendind.svg" class="icond">Pending Request</a>
+    <a href="#"><img src="images/aware.svg" class="icond">Awareness Campaign</span></a>
+    <a href="#"><img src="images/invest.svg" class="icond">Investigation Guide</a>
+    <a href="#"><img src="images/sett.svg" class="icond">Setting</a>
+    <hr class="line1">
+    <a href="#"><img src="images/invest.svg" class="icond">Profile</a>
+    <a href="#"><img src="images/invest.svg" class="icond">Logout</a>   
+    
+  </div>
+
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="menu-txt">
+      <a href="#">
+        <div class="icon-container">
+          <img src="images/home.svg" class="icond">Home
+        </div>
+      </a>
+      <a href="#">
+        <div class="icon-container">
+          <img src="images/search1.svg" class="icond">Search
+        </div>
+      </a>
+      <a href="#">
+        <div class="icon-container">
+          <img src="images/hotspot.svg" class="icond">Hotspots
+        </div>
+      </a>
+      <a href="#">
+        <div class="icon-container">
+          <img src="images/habitual.svg" class="icond">Habitual Offenders
+        </div>
+      </a>
+      <a href="#">
+        <div class="icon-container">
+          <img src="images/data-entry.svg" class="icond">Data Entry
+        </div>
+      </a>
+      <a href="#">
+        <div class="icon-container">
+          <img src="images/pendind.svg" class="icond">Pending Request
+        </div>
+      </a>
+      <a href="#">
+        <div class="icon-container">
+          <img src="images/aware.svg" class="icond">Awareness Campaign
+        </div>
+      </a>
+      <a href="#">
+        <div class="icon-container">
+          <img src="images/invest.svg" class="icond">Investigation Guide
+        </div>
+      </a>
+      <hr class="line">
+      <span class="bd-text">Powered by</span>
+      <span class="bd-text">Telangana Cyber Security Bureau</span>
+    </div>
+  </div>
+
+
+  <div class="content">
+    
+        <div class="container">
+          <div class="fir-head">UPDATED FIR DETAILS</div>
+          <form>
+              <div class="frm">
+                  <label for="firNo" class="form-label ">FIR No</label><br>
+                  <input type="text" class="form-control" id="firNo" placeholder="Enter FIR No">
+              </div>
+              <div class="mb-3">
+                  <label for="sectionOfLaw" class="form-label ">Section of Law</label><br>
+                  <input type="text" class="form-control" id="sectionOfLaw" placeholder="Enter Section of Law">
+              </div>
+              <div class="mb-3">
+                  <label for="dateOfFIR" class="form-label ">Date of FIR</label><br>
+                  <input type="date" class="form-control" id="dateOfFIR" placeholder="Select Date of FIR">
+              </div>
+              <button type="submit" class="btn-submit">SUBMIT</button>
+          </form>
+      </div>
+        
+    
+                      
+                     
+                     
+       
+  </div>
+
+
+ 
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+
+  
+
+
+
+
+
+<script>
+  function openTab(evt, tabName) {
+  var i, tabcontent, tablinks;
+
+  // Hide all tab content by default
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Remove the active class from all tab links
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  // Show the current tab and add an "active" class to the button that opened it
+  document.getElementById(tabName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+// Set the first tab to be active by default
+document.addEventListener("DOMContentLoaded", function() {
+  document.querySelector('.tablinks').click();
+});
+
+</script>
+
+
+<script>
+  document.getElementById('navbar-toggle').addEventListener('click', function () {
+    var menu = document.getElementById('navbar-menu');
+    if (menu.classList.contains('show')) {
+      menu.classList.remove('show');
+    } else {
+      menu.classList.add('show');
+    }
+  });
+</script>
+
+<script>
+  document.getElementById('hamburger-menu').addEventListener('click', function () {
+    var nav = document.getElementById('mobile-nav');
+    nav.classList.toggle('active');
+  });
+</script>
+
+</body>
+
+
+
+</html>
