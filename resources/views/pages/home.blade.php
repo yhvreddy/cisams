@@ -410,41 +410,41 @@
                             type: 'bar',
                             data: {
                                 labels: [
-                                    'Pending\nEvidence',
                                     'Pending\nArrest',
                                     'Pending\nChargesheet',
                                     'Charged',
-                                    'Unter\nTrial',
+                                    'Under\nTrial',
                                     'Closed'
                                 ],
-                                datasets: [{
-                                        label: 'Pending Evidence',
-                                        data: [80, 0, 0, 0, 0, 0],
-                                        backgroundColor: '#1F3C88'
-                                    },
+                                datasets: [
+                                    // {
+                                    //     label: 'Pending Evidence',
+                                    //     data: [0, 0, 0, 0, 0, 0],
+                                    //     backgroundColor: '#1F3C88'
+                                    // },
                                     {
                                         label: 'Pending Arrest',
-                                        data: [0, 30, 0, 0, 0, 0],
+                                        data: [{{ $cyberCrimeInfo->pending_arrest }}, 0, 0, 0, 0],
                                         backgroundColor: '#A3BFFA'
                                     },
                                     {
                                         label: 'Pending Chargesheet',
-                                        data: [0, 0, 20, 0, 0, 0],
+                                        data: [0, {{ $cyberCrimeInfo->pending_chargesheet }}, 0, 0, 0],
                                         backgroundColor: '#7396FF'
                                     },
                                     {
                                         label: 'Charged',
-                                        data: [0, 0, 0, 70, 0, 0],
+                                        data: [0, 0, {{ $cyberCrimeInfo->charged }}, 0, 0],
                                         backgroundColor: '#7080FF'
                                     },
                                     {
-                                        label: 'Unter Trial',
-                                        data: [0, 0, 0, 0, 40, 0],
+                                        label: 'Under Trial',
+                                        data: [0, 0, 0, {{ $cyberCrimeInfo->under_trial }}, 0],
                                         backgroundColor: '#A9B6FF'
                                     },
                                     {
                                         label: 'Closed',
-                                        data: [0, 0, 0, 0, 0, 10],
+                                        data: [0, 0, 0, 0, {{ $cyberCrimeInfo->closed }}],
                                         backgroundColor: '#A8AEDB'
                                     }
                                 ]
@@ -460,11 +460,16 @@
                                                 size: 10, // Smaller font size for labels
                                                 family: 'Red Hat Display'
                                             }
-                                        }
+                                        },
+                                        grid: {
+                                            display: false // Optionally hide grid lines on x-axis
+                                        },
+                                        barThickness: 80, // Set the bar thickness to 50px
+                                        maxBarThickness: 90 // Limit the maximum bar thickness to 60px
                                     },
                                     y: {
                                         beginAtZero: true,
-                                        max: 90,
+                                        max: "{{ $cyberCrimeInfoMaxCount + 10 }}",
                                         ticks: {
                                             stepSize: 10
                                         }

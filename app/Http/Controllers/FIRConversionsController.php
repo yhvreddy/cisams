@@ -7,6 +7,7 @@ use App\Models\AdditionalInformation;
 use App\Models\TotalPOH;
 use App\Mail\GenerateRequestMail;
 use App\Mail\CDRGenerateRequestMail;
+use App\Mail\WhatsAppRequestMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 
@@ -158,12 +159,21 @@ class FIRConversionsController extends Controller
             return redirect()->back()->with('error', 'Email is required');
         }
 
+        $status = false;
         if ($request->type == 'cdr') {
+            $status = true;
             Mail::to($request->email)->send(new CDRGenerateRequestMail());
-        } else {
+        } elseif ($request->type == 'whatsapp') {
+            $status = true;
+            Mail::to($request->email)->send(new WhatsAppRequestMail());
+        } elseif ($request->type == 'ipdr') {
+            $status = true;
             Mail::to($request->email)->send(new GenerateRequestMail()); // send email
         }
-        dd("===");
+
+        if (!$status) {
+            return redirect()->back()->with('failed', 'Invalid request to send email.');
+        }
         return redirect()->back()->with('success', 'Email Sent Successfully!');
     }
 }

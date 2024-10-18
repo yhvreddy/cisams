@@ -11,6 +11,7 @@ use App\Enums\AccountStatus;
 use App\Models\PTWarrants;
 use App\Models\LokAdalatRefundFIR;
 use App\Models\AdditionalInformation;
+use App\Models\CyberCrimeInfo;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -231,7 +232,31 @@ class HomeController extends Controller
             'refundPetitionPending' => $refundPetitionPending
         ];
 
-        return view('pages.home', compact('ptWarrantCountsJSON', 'graphOneCountJson', 'nonFinancialChartJson', 'financialChartJson', 'categoryNamesJson', 'monthDataJson', 'lastThreeMonths', 'firConversionData', 'refundData'));
+
+        // Graph 4
+        $cyberCrimeInfo = DB::table('Cyber_Crime_Info')
+            ->select(
+                DB::raw("
+                    SUM(CASE WHEN FIR_STATUS IS NULL OR FIR_STATUS = '' THEN 1 ELSE 0 END) as pending_arrest,
+                    SUM(CASE WHEN FIR_STATUS IN ('UI Cases', 'Under Investigation') THEN 1 ELSE 0 END) as pending_chargesheet,
+                    SUM(CASE WHEN FIR_STATUS IN ('Chargesheet Created', 'Chargesheeted') THEN 1 ELSE 0 END) as charged,
+                    SUM(CASE WHEN FIR_STATUS IN ('Under Trial', 'Pending Trial', 'PT Cases') THEN 1 ELSE 0 END) as under_trial,
+                    SUM(CASE WHEN FIR_STATUS IN ('Disposal', 'Disposed Of', 'Quashed') THEN 1 ELSE 0 END) as closed
+                ")
+            )->first();
+
+        // Create an array to store the counts
+        $cyberCrimeInfoCountsArray = [
+            $cyberCrimeInfo->pending_arrest,
+            $cyberCrimeInfo->pending_chargesheet,
+            $cyberCrimeInfo->charged,
+            $cyberCrimeInfo->under_trial,
+            $cyberCrimeInfo->closed
+        ];
+        // Get the maximum value
+        $cyberCrimeInfoMaxCount = max($cyberCrimeInfoCountsArray);
+
+        return view('pages.home', compact('ptWarrantCountsJSON', 'graphOneCountJson', 'nonFinancialChartJson', 'financialChartJson', 'categoryNamesJson', 'monthDataJson', 'lastThreeMonths', 'firConversionData', 'refundData', 'cyberCrimeInfo', 'cyberCrimeInfoMaxCount'));
     }
 
     public function logout()
