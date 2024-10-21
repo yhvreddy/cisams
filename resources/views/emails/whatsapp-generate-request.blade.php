@@ -19,7 +19,7 @@
                     <strong style="font-size: 14px;color:#0070c0;font-style: italic;">HYDERABAD</strong>
                 </td>
                 <td style="vertical-align: middle;">
-                    <img src="{{ asset('assets/emails/logo.jpg') }}" alt="Logo"
+                    <img src="{{ url('/assets/emails/logo.jpg') }}" alt="Logo"
                         style="width: 115px; height: 104px;" />
                 </td>
                 <td style="text-align: right;vertical-align: middle;line-height: 1.2;">
