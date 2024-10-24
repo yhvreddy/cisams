@@ -27,41 +27,48 @@ class FIRConversionsController extends Controller
 
     public function index(Request $request)
     {
-        $allAdditionalInfo = $this->additionalInformation->join('Sample_Total_POH', 'Sample_Total_POH.NCRP Ack No ', 'Sample_Additional_Information.Acknowledgement_No')
+        $allAdditionalInfo = $this->totalPoh->leftJoin('Sample_Additional_Information', 'Sample_Total_POH.NCRP Ack No ', 'Sample_Additional_Information.Acknowledgement_No')
             ->select('Sample_Additional_Information.*', 'Sample_Total_POH.Amount Lost as amount_lost', 'Sample_Total_POH.Amount POH as amount_poh')
-            ->paginate();
+            ->paginate(50);
 
-        $convertedAdditionalInfo = $this->additionalInformation->join('Sample_Total_POH', 'Sample_Total_POH.NCRP Ack No ', 'Sample_Additional_Information.Acknowledgement_No')
+        $convertedAdditionalInfo = $this->totalPoh->leftJoin('Sample_Additional_Information', 'Sample_Total_POH.NCRP Ack No ', 'Sample_Additional_Information.Acknowledgement_No')
             ->select('Sample_Additional_Information.*', 'Sample_Total_POH.Amount Lost as amount_lost', 'Sample_Total_POH.Amount POH as amount_poh')
-            ->whereIn('Sample_Additional_Information.status', ['Registered', 'FIR Registered'])
-            ->paginate();
+            ->whereIn('Sample_Total_POH.status', ['Registered', 'FIR Registered'])
+            ->paginate(50);
 
-        $pendingAdditionalInfo = $this->additionalInformation->join('Sample_Total_POH', 'Sample_Total_POH.NCRP Ack No ', 'Sample_Additional_Information.Acknowledgement_No')
+        $pendingAdditionalInfo = $this->totalPoh->leftJoin('Sample_Additional_Information', 'Sample_Total_POH.NCRP Ack No ', 'Sample_Additional_Information.Acknowledgement_No')
             ->select('Sample_Additional_Information.*', 'Sample_Total_POH.Amount Lost as amount_lost', 'Sample_Total_POH.Amount POH as amount_poh')
-            ->whereNotIn('Sample_Additional_Information.status', ['Registered', 'FIR Registered', 'Closed'])->paginate();
+            ->whereNotIn('Sample_Total_POH.status', ['Registered', 'FIR Registered', 'Closed'])->paginate(50);
         return view('pages.fir-conversions.index', compact('allAdditionalInfo', 'convertedAdditionalInfo', 'pendingAdditionalInfo'));
     }
 
     public function firConversions($listType, $basedOn, Request $request)
     {
-
         $listName = 'Total Complaints';
-        $firConversionListing = $this->additionalInformation
-            ->join('Sample_Total_POH', 'Sample_Total_POH.NCRP Ack No', '=', 'Sample_Additional_Information.Acknowledgement_No')
-            ->select('Sample_Additional_Information.District_Name', DB::raw('COUNT(Sample_Additional_Information.Acknowledgement_No) as total_cases'))
+        $firConversionListing = $this->totalPoh
+            ->leftJoin('Sample_Additional_Information', 'Sample_Total_POH.NCRP Ack No', '=', 'Sample_Additional_Information.Acknowledgement_No')
+            ->select('Sample_Additional_Information.District_Name', DB::raw('COUNT(*) as total_cases'))
+            ->whereNotNull('Sample_Additional_Information.District_Name')
             ->groupBy('Sample_Additional_Information.District_Name');
+
+        if ($basedOn == 'amount-lost-more-than-one-lakh') {
+            // $firConversionListing->whereRaw("TRY_CAST(Sample_Total_POH.[Amount Lost] AS INT) > 100000");
+        }
+
+        if ($basedOn == 'poh-more-than-25000') {
+            // $firConversionListing->whereRaw("TRY_CAST(Sample_Total_POH.[Amount POH] AS INT) > 25000");
+        }
 
         // Apply filters based on list type
         if ($listType == 'pending-conversions') {
-            $firConversionListing->whereNotIn('Sample_Additional_Information.status', ['Registered', 'FIR Registered', 'Closed']);
+            $firConversionListing->whereNotIn('Sample_Total_POH.status', ['Registered', 'FIR Registered', 'Closed']);
             $listName = 'Pending Conversions';
         } elseif ($listType == 'fir-converted') {
-            $firConversionListing->whereIn('Sample_Additional_Information.status', ['Registered', 'FIR Registered']);
+            $firConversionListing->whereIn('Sample_Total_POH.status', ['Registered', 'FIR Registered']);
             $listName = 'FIR Converted';
         }
 
         $districtWiseData = $firConversionListing->get();
-
         $labels = [];
         $casesData = [];
         $colors = []; // Array to hold dynamic colors
@@ -88,19 +95,24 @@ class FIRConversionsController extends Controller
     public function firConversionDistrict($district, $listType, $basedOn, Request $request)
     {
         $listName = 'Total Complaints';
-        $firConversionListing = $this->additionalInformation
-            ->join('Sample_Total_POH', 'Sample_Total_POH.NCRP Ack No ', 'Sample_Additional_Information.Acknowledgement_No')
+        $firConversionListing = $this->totalPoh
+            ->leftJoin('Sample_Additional_Information', 'Sample_Total_POH.NCRP Ack No ', 'Sample_Additional_Information.Acknowledgement_No')
+            ->leftJoin('FIR_Conversions', 'FIR_Conversions.Acknowledgement_No', 'Sample_Additional_Information.Acknowledgement_No')
             ->where('Sample_Additional_Information.District_Name', $district)
-            ->select('Sample_Additional_Information.*', 'Sample_Total_POH.Amount Lost as amount_lost', 'Sample_Total_POH.Amount POH as amount_poh');
+            ->select('Sample_Additional_Information.*', 'Sample_Total_POH.Amount Lost as amount_lost', 'Sample_Total_POH.Amount POH as amount_poh', 'FIR_Conversions.Acknowledgement_No AS FIR_Conversions_Akg_No');
         if ($listType == 'pending-conversions') {
-            $firConversionListing->whereNotIn('Sample_Additional_Information.status', ['Registered', 'FIR Registered', 'Closed']);
+            $firConversionListing->whereNotIn('Sample_Total_POH.status', ['Registered', 'FIR Registered', 'Closed']);
             $listName = 'Pending Conversions';
         } elseif ($listType == 'fir-converted') {
-            $firConversionListing->whereIn('Sample_Additional_Information.status', ['Registered', 'FIR Registered']);
-            $listName = 'FIR Converted';
-        }
-        $firConversionListing = $firConversionListing->paginate(20);
+            $firConversionListing
+                ->whereIn('Sample_Total_POH.status', ['Registered', 'FIR Registered']);
+            $firConversionListing = $firConversionListing->paginate(20);
 
+            $listName = 'FIR Converted';
+            return view('pages.fir-conversions.fir_converted_list', compact('firConversionListing', 'listName', 'district', 'listType', 'basedOn'));
+        }
+
+        $firConversionListing = $firConversionListing->paginate(20);
         return view('pages.fir-conversions.list', compact('firConversionListing', 'listName', 'district', 'listType', 'basedOn'));
     }
 
@@ -166,7 +178,7 @@ class FIRConversionsController extends Controller
         } elseif ($request->type == 'whatsapp') {
             $status = true;
             Mail::to($request->email)->send(new WhatsAppRequestMail());
-        } elseif ($request->type == 'ipdr') {
+        } elseif ($request->type == 'soa') {
             $status = true;
             Mail::to($request->email)->send(new GenerateRequestMail()); // send email
         }

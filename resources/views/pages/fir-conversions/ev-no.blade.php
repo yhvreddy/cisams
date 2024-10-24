@@ -31,15 +31,15 @@
                     <td data-label="S.No"> 1</td>
                     <td data-label="CDR/CAF">
                         <a href="{{ route('fir-conversions.whatsapp-pending', ['type' => 'cdr']) }}"
-                            class="border-button">No</a>
+                            class="borderr-button">No</a>
                     </td>
                     <td data-label="IPDR">
                         <a href="{{ route('fir-conversions.whatsapp-pending', ['type' => 'ipdr']) }}"
-                            class="border-button">No</a>
+                            class="borderr-button">No</a>
                     </td>
                     <td data-label="WHATSAPP">
                         <a href="{{ route('fir-conversions.whatsapp-pending', ['type' => 'whatsapp']) }}"
-                            class="pink-btn">No</a>
+                            class="borderr-button">No</a>
                     </td>
                     <td data-label="SM HANDLES">
                         <btn class="borderr-button">No</btn>

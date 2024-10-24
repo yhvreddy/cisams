@@ -2,6 +2,10 @@
 
 @section('title', 'Home')
 
+@section('styles')
+
+@endsection
+
 @section('content')
     <div class="row">
         <div class="col-md-4 box ">
@@ -205,7 +209,7 @@
                                 position: 'top',
                                 labels: {
                                     font: {
-                                        size: 9
+                                        size: 12
                                     }
                                 }
                             },
@@ -213,7 +217,7 @@
                                 display: false,
                                 text: '',
                                 font: {
-                                    size: 14,
+                                    size: 16,
                                     family: 'Red Hat Display',
                                     weight: 'bold',
                                     color: '#262626'
@@ -310,7 +314,7 @@
                                     position: 'top',
                                     labels: {
                                         font: {
-                                            size: 9
+                                            size: 12
                                         }
                                     }
                                 },
@@ -318,7 +322,7 @@
                                     display: false,
                                     text: '',
                                     font: {
-                                        size: 14,
+                                        size: 12,
                                         family: 'Red Hat Display',
                                         weight: 'bold',
                                         color: '#262626'
@@ -330,9 +334,9 @@
                                     stacked: false, // Do not stack bars
                                     ticks: {
                                         font: {
-                                            size: 9
+                                            size: 12
                                         },
-                                        padding: 10 // Increase space around x-axis labels
+                                        padding: 10, // Increase space around x-axis labels
                                     },
                                     grid: {
                                         offset: true,
@@ -341,20 +345,20 @@
                                     }
                                 },
                                 y: {
-                                    beginAtZero: true,
+                                    beginAtZero: false,
                                     stacked: false, // Do not stack bars
                                     ticks: {
                                         font: {
-                                            size: 9
+                                            size: 12
                                         },
                                         min: 0,
-                                        max: 250,
+                                        max: {{ $firConversionData['xAxis'] ?? 10 }},
                                         stepSize: 50,
                                         callback: function(value) {
                                             return value.toString();
                                         },
                                         maxRotation: 0, // Ensure labels are horizontal
-                                        minRotation: 0
+                                        minRotation: 0,
                                     },
                                     grid: {
                                         borderColor: 'rgba(0, 0, 0, 0.1)',
@@ -454,10 +458,8 @@
                                     x: {
                                         ticks: {
                                             autoSkip: false,
-                                            maxRotation: 0, // Ensure labels are horizontal
-                                            minRotation: 0,
                                             font: {
-                                                size: 10, // Smaller font size for labels
+                                                size: 12, // Smaller font size for labels
                                                 family: 'Red Hat Display'
                                             }
                                         },
@@ -471,7 +473,7 @@
                                         beginAtZero: true,
                                         max: "{{ $cyberCrimeInfoMaxCount + 10 }}",
                                         ticks: {
-                                            stepSize: 10
+                                            stepSize: 12
                                         }
                                     }
                                 },
@@ -484,7 +486,7 @@
                                             usePointStyle: true,
                                             color: '#000',
                                             font: {
-                                                size: 10
+                                                size: 12
                                             }
                                         }
                                     }
@@ -568,7 +570,7 @@
                                 labels: {
                                     boxWidth: 8,
                                     font: {
-                                        size: 8,
+                                        size: 12,
                                         padding: 4
                                     },
                                     generateLabels: function(chart) {
@@ -658,7 +660,14 @@
                         },
                         plugins: {
                             legend: {
-                                position: 'top'
+                                position: 'top',
+                                labels: {
+                                    boxWidth: 8,
+                                    font: {
+                                        size: 12,
+                                        padding: 4
+                                    },
+                                }
                             }
                         }
                     }

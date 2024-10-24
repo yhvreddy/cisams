@@ -43,7 +43,7 @@
             </tbody>
         </table>
 
-        {{ $listingData->links() }}
+        {{ $listingData->links('vendor.pagination.custom-pagination') }}
     </div>
 
 @endsection

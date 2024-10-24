@@ -38,13 +38,11 @@
                             <td data-label="AMOUNT LOST">{{ $ai->amount_lost }}</td>
                             <td data-label="AMOUNT POH">{{ $ai->amount_poh }}</td>
                             <td data-label="FIR CONVERSION">
-                                @if (in_array($ai->Status, ['Registered', 'FIR Registered']))
+                                @if (!$ai->FIR_Conversions_Akg_No)
                                     <a href="{{ route('fir-conversions.tc-yes', ['district' => $district, 'listType' => $listType, 'sno' => $ai->S_No]) }}"
-                                        class="borderr-button">No</a>
-                                @elseif($ai->Status == 'Closed')
-                                    <btn class="gree-btn">Closed</btn>
+                                        class="border-button">Yes</a>
                                 @else
-                                    <btn class="border-button">Yes</btn>
+                                    <btn class="borderr-button">No</btn>
                                 @endif
                             </td>
                             <td data-label="STATUS - REFUND ORDER">

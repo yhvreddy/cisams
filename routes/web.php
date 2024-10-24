@@ -95,6 +95,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
 
         Route::prefix('habitual-offenders')->name('habitual.')->group(function () {
             Route::get('/', 'HabitualOffendersController@index')->name('index');
+            Route::get('/{state}/{district}', 'HabitualOffendersController@districtWiseList')->name('list');
         });
     });
 

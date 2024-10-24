@@ -7,7 +7,7 @@
 
 
 @section('content')
-    @include('pages.fir-conversions.components.header-title', ['title' => 'Generate Request'])
+    @include('pages.fir-conversions.components.header-title', ['title' => $type . ' Generate Request'])
     <div class="row ">
         <form class="mt-2" method="POST"
             action="{{ route('fir-conversions.generate-request', ['type' => $type, 'requestId' => request()->requestId ?? 123]) }}">

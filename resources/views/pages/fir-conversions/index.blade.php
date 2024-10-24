@@ -63,7 +63,7 @@
                     </tbody>
                 </table>
 
-                {{ $allAdditionalInfo->links() }}
+                {{ $allAdditionalInfo->links('vendor.pagination.custom-pagination') }}
             </div>
         </div>
 
@@ -113,7 +113,7 @@
                     </tbody>
                 </table>
 
-                {{ $convertedAdditionalInfo->links() }}
+                {{ $convertedAdditionalInfo->links('vendor.pagination.custom-pagination') }}
             </div>
         </div>
 
@@ -163,7 +163,7 @@
                     </tbody>
                 </table>
 
-                {{ $pendingAdditionalInfo->links() }}
+                {{ $pendingAdditionalInfo->links('vendor.pagination.custom-pagination') }}
             </div>
         </div>
     </div>
