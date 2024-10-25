@@ -30,43 +30,43 @@
                 @foreach ($cyberCrimeInfo as $key => $cyberCrime)
                     <tr>
                         <td data-label="S.No"> {{ $key + 1 }}</td>
-                        <td data-label="FIR NO">{{ $cyberCrime->FIR_ID }}</td>
+                        <td data-label="FIR NO">{{ $cyberCrime->FIR_NO . '/' . $cyberCrime->YEAR }}</td>
                         <td data-label="SEC OF LAW">{{ $cyberCrime->SEC_OF_LAW }}</td>
                         <td data-label="DATE OF FIR">
                             {{ !empty($cyberCrime->CRIME_CRTD_DATE) ? date('d-m-Y', strtotime($cyberCrime->CRIME_CRTD_DATE)) : '-' }}
                         </td>
                         <td data-label="EVIDENCE GATHERED">
-                            @if (!in_array($cyberCrime->FIR_STATUS, [null, 'New', '']))
-                                <a href="{{ route('fir-conversions.ev-no') }}" class="border-button">Yes</a>
+                            @if (in_array($cyberCrime->FIR_STATUS, [null, 'New', '']))
+                                <a href="{{ route('fir-conversions.ev-no') }}" class="borderr-button">No</a>
                             @else
-                                <btn class="borderr-button">No</btn>
+                                <btn class="border-button">Yes</btn>
                             @endif
 
                         </td>
                         <td data-label="ACCUSED ARRESTED">
                             @if (!in_array($cyberCrime->ARREST_STATUS, [null, 'N', '', 'n']))
-                                <a href="{{ route('fir-conversions.ev-no') }}" class="border-button">Yes</a>
+                                <btn class="border-button">Yes</btn>
                             @else
                                 <btn class="borderr-button">No</btn>
                             @endif
                         </td>
                         <td data-label="STATUS-UI">
                             @if (!in_array($cyberCrime->FIR_STATUS, ['UI Cases']))
-                                <a href="{{ route('fir-conversions.ev-no') }}" class="border-button">Yes</a>
+                                <btn class="border-button">Yes</btn>
                             @else
                                 <btn class="borderr-button">No</btn>
                             @endif
                         </td>
                         <td data-label="STATUS - CHARGED">
                             @if (!in_array($cyberCrime->FIR_STATUS, ['Chargesheet Created', 'CHARGED']))
-                                <a href="{{ route('fir-conversions.ev-no') }}" class="border-button">Yes</a>
+                                <btn class="border-button">Yes</btn>
                             @else
                                 <btn class="borderr-button">No</btn>
                             @endif
                         </td>
                         <td data-label="STATUS - PT">
                             @if (!in_array($cyberCrime->FIR_STATUS, ['PT Cases']))
-                                <a href="{{ route('fir-conversions.ev-no') }}" class="border-button">Yes</a>
+                                <btn class="border-button">Yes</btn>
                             @else
                                 <btn class="borderr-button">No</btn>
                             @endif

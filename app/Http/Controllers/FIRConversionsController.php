@@ -146,14 +146,12 @@ class FIRConversionsController extends Controller
 
     public function tcYes($district, $listType, Request $request)
     {
-        $firConversion = $this->totalPoh
-            ->leftJoin('Sample_Additional_Information', 'Sample_Total_POH.NCRP Ack No ', 'Sample_Additional_Information.Acknowledgement_No')->where('Sample_Total_POH.NCRP Ack No ', $request->ncrpId)->first();
-        $cyberCrimeInfo = DB::table('FIR_Conversions')
-            ->leftJoin('Cyber_Crime_Info', DB::raw("CONCAT(Cyber_Crime_Info.FIR_NO, '/', Cyber_Crime_Info.YEAR)"), '=', 'FIR_Conversions.FIR_NO')
-            ->select('FIR_Conversions.FIR_NO as FIR_ID', 'Cyber_Crime_Info.*')
+        // $firConversion = $this->totalPoh
+        //     ->leftJoin('Sample_Additional_Information', 'Sample_Total_POH.NCRP Ack No ', 'Sample_Additional_Information.Acknowledgement_No')->where('Sample_Total_POH.NCRP Ack No ', $request->ncrpId)->first();
+        $cyberCrimeInfo = DB::table('Cyber_Crime_Info')
+            ->select('Cyber_Crime_Info.*')
             ->whereRaw("CONCAT(Cyber_Crime_Info.FIR_NO, '/', Cyber_Crime_Info.YEAR) = ?", [$request->FIR_NO])
             // ->orderBy('Cyber_Crime_Info.FIR_ID', 'DESC')
-            // ->groupBy('Cyber_Crime_Info.SEC_OF_LAW', 'FIR_Conversions.FIR_NO', 'Cyber_Crime_Info.CRIME_ID', 'Cyber_Crime_Info.ACCUSED_NO', 'Cyber_Crime_Info.FIR_NO', 'Cyber_Crime_Info.YEAR', 'Cyber_Crime_Info.CRIME_PS', 'Cyber_Crime_Info.CRIME_DISTRICT', 'Cyber_Crime_Info.CRIME_STATE', 'Cyber_Crime_Info.CRIME_MO', 'Cyber_Crime_Info.CRIME_MAJOR_HEAD', 'Cyber_Crime_Info.CRIME_PROPERTY_LOST', 'Cyber_Crime_Info.OFFENCE_PHONE', 'Cyber_Crime_Info.OFFENCE_EMAIL', 'Cyber_Crime_Info.OFFENCE_FACEBOOK', 'Cyber_Crime_Info.OFFENCE_OTHER_SOCIAL_MEDIA', 'Cyber_Crime_Info.OFFENCE_BANK_ACCOUNT', 'Cyber_Crime_Info.OFFENCE_BANK_NAME', 'Cyber_Crime_Info.OFFENCE_BANK_STATE', 'Cyber_Crime_Info.OFFENCE_BANK_DISTRICT')
             ->get();
 
         if (!$cyberCrimeInfo->count()) {
