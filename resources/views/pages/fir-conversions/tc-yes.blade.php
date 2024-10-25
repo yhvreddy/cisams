@@ -27,28 +27,52 @@
             </thead>
 
             <tbody class="wht-box ">
-                <tr>
-                    <td data-label="S.No"> 1</td>
-                    <td data-label="FIR NO">210/2022</td>
-                    <td data-label="SEC OF LAW">60(D) IT Act</td>
-                    <td data-label="DATE OF FIR">23-07-2024</td>
-                    <td data-label="EVIDENCE GATHERED"><a href="{{ route('fir-conversions.ev-no') }}"
-                            class="borderr-button">No</a> </td>
-                    <td data-label="ACCUSED ARRESTED">
-                        <btn class="borderr-button">No</btn>
-                    </td>
-                    <td data-label="STATUS-UI">
-                        <btn class="border-button">Yes</btn>
-                    </td>
-                    <td data-label="STATUS - CHARGED">
-                        <btn class="borderr-button">No</btn>
-                    </td>
-                    <td data-label="STATUS - PT">
-                        <btn class="borderr-button">No</btn>
-                    </td>
-                </tr>
+                @foreach ($cyberCrimeInfo as $key => $cyberCrime)
+                    <tr>
+                        <td data-label="S.No"> {{ $key + 1 }}</td>
+                        <td data-label="FIR NO">{{ $cyberCrime->FIR_ID }}</td>
+                        <td data-label="SEC OF LAW">{{ $cyberCrime->SEC_OF_LAW }}</td>
+                        <td data-label="DATE OF FIR">
+                            {{ !empty($cyberCrime->CRIME_CRTD_DATE) ? date('d-m-Y', strtotime($cyberCrime->CRIME_CRTD_DATE)) : '-' }}
+                        </td>
+                        <td data-label="EVIDENCE GATHERED">
+                            @if (!in_array($cyberCrime->FIR_STATUS, [null, 'New', '']))
+                                <a href="{{ route('fir-conversions.ev-no') }}" class="border-button">Yes</a>
+                            @else
+                                <btn class="borderr-button">No</btn>
+                            @endif
 
-                <!-- Repeat rows as needed -->
+                        </td>
+                        <td data-label="ACCUSED ARRESTED">
+                            @if (!in_array($cyberCrime->ARREST_STATUS, [null, 'N', '', 'n']))
+                                <a href="{{ route('fir-conversions.ev-no') }}" class="border-button">Yes</a>
+                            @else
+                                <btn class="borderr-button">No</btn>
+                            @endif
+                        </td>
+                        <td data-label="STATUS-UI">
+                            @if (!in_array($cyberCrime->FIR_STATUS, ['UI Cases']))
+                                <a href="{{ route('fir-conversions.ev-no') }}" class="border-button">Yes</a>
+                            @else
+                                <btn class="borderr-button">No</btn>
+                            @endif
+                        </td>
+                        <td data-label="STATUS - CHARGED">
+                            @if (!in_array($cyberCrime->FIR_STATUS, ['Chargesheet Created', 'CHARGED']))
+                                <a href="{{ route('fir-conversions.ev-no') }}" class="border-button">Yes</a>
+                            @else
+                                <btn class="borderr-button">No</btn>
+                            @endif
+                        </td>
+                        <td data-label="STATUS - PT">
+                            @if (!in_array($cyberCrime->FIR_STATUS, ['PT Cases']))
+                                <a href="{{ route('fir-conversions.ev-no') }}" class="border-button">Yes</a>
+                            @else
+                                <btn class="borderr-button">No</btn>
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

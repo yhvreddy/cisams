@@ -30,17 +30,19 @@
                 <tbody class="wht-box ">
                     @foreach ($firConversionListing as $key => $ai)
                         <tr>
-                            <td data-label="S.No">{{ $ai->S_No }}</td>
-                            <td data-label="NCRP NO">{{ $ai->Acknowledgement_No }}</td>
+                            <td data-label="S.No">{{ $ai->sno }}</td>
+                            <td data-label="NCRP NO">{{ $ai->NCRP_No }}</td>
                             <td data-label="DATE Of REPORT">
-                                {{ date('d-m-Y', strtotime($ai->Complaint_Date)) }}</td>
-                            <td data-label="MO">{{ $ai->Category }}</td>
+                                {{ !empty($ai->Complaint_Date) ? date('d-m-Y', strtotime($ai->Complaint_Date)) : '-' }}</td>
+                            <td data-label="MO">{{ $ai->Mo ?? '-' }}</td>
                             <td data-label="AMOUNT LOST">{{ $ai->amount_lost }}</td>
                             <td data-label="AMOUNT POH">{{ $ai->amount_poh }}</td>
                             <td data-label="FIR CONVERSION">
-                                @if (!$ai->FIR_Conversions_Akg_No)
-                                    <a href="{{ route('fir-conversions.tc-yes', ['district' => $district, 'listType' => $listType, 'sno' => $ai->S_No]) }}"
+                                @if (in_array($ai->POH_Status, ['Registered', 'FIR Registered']))
+                                    <a href="{{ route('fir-conversions.tc-yes', ['district' => $district, 'listType' => $listType, 'ncrpId' => $ai->NCRP_No, 'FIR_NO' => $ai->FIR_NO]) }}"
                                         class="border-button">Yes</a>
+                                @elseif($ai->POH_Status == 'Closed')
+                                    <btn class="gree-btn">Closed</btn>
                                 @else
                                     <btn class="borderr-button">No</btn>
                                 @endif
