@@ -12,23 +12,28 @@ class GenerateRequestMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $data;
+
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($data)
     {
-        //
+        $this->data = $data;
     }
 
 
     public function build()
     {
+        $data = $this->data;
+        $requestData = $data['requestData'];
+        $logo = url('/assets/emails/logo.jpg');
         // Generate PDF from view in-memory
-        $pdf = PDF::loadView('emails.generate-request'); // , $this->data
+        $pdf = PDF::loadView('emails.generate-request', ['data' => $data, 'requestData' => $requestData, 'logo' => $logo]); // , $this->data
 
         return $this->from('info@cisams.com')
             ->subject('Application Report Request')
-            ->view('emails.generate-request')
+            ->view('emails.generate-request', compact('data', 'requestData', 'logo'))
             ->attachData($pdf->output(), 'document.pdf', [
                 'mime' => 'application/pdf',
             ]); // Attach PDF without storing it;

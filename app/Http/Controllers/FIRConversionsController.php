@@ -146,8 +146,8 @@ class FIRConversionsController extends Controller
 
     public function tcYes($district, $listType, Request $request)
     {
-        // $firConversion = $this->totalPoh
-        //     ->leftJoin('Sample_Additional_Information', 'Sample_Total_POH.NCRP Ack No ', 'Sample_Additional_Information.Acknowledgement_No')->where('Sample_Total_POH.NCRP Ack No ', $request->ncrpId)->first();
+        $firNo = $request->FIR_NO;
+        $ncrpId = $request->ncrpId;
         $cyberCrimeInfo = DB::table('Cyber_Crime_Info')
             ->select('Cyber_Crime_Info.*')
             ->whereRaw("CONCAT(Cyber_Crime_Info.FIR_NO, '/', Cyber_Crime_Info.YEAR) = ?", [$request->FIR_NO])
@@ -157,7 +157,7 @@ class FIRConversionsController extends Controller
         if (!$cyberCrimeInfo->count()) {
             return redirect()->back()->with('error', 'FIR Not Found');
         }
-        return view('pages.fir-conversions.tc-yes', compact('district', 'listType', 'cyberCrimeInfo'));
+        return view('pages.fir-conversions.tc-yes', compact('district', 'listType', 'cyberCrimeInfo', 'firNo', 'ncrpId'));
     }
 
     public function roPending(Request $request)
@@ -176,7 +176,6 @@ class FIRConversionsController extends Controller
 
     public function fcYes($district, $listType, Request $request)
     {
-        dd($district, $listType);
         return view('pages.fir-conversions.fc-yes');
     }
 
@@ -187,7 +186,9 @@ class FIRConversionsController extends Controller
 
     public function evNo(Request $request)
     {
-        return view('pages.fir-conversions.ev-no');
+        $firNo = $request->firNo;
+        $ncrpId = $request->ncrpId;
+        return view('pages.fir-conversions.ev-no', compact('firNo', 'ncrpId'));
     }
 
     public function egNo(Request $request)
@@ -197,12 +198,16 @@ class FIRConversionsController extends Controller
 
     public function whatsAppPending($type, Request $request)
     {
-        return view('pages.fir-conversions.whatsapp-pending', compact('type'));
+        $firNo = $request->firNo;
+        $ncrpId = $request->ncrpId;
+        return view('pages.fir-conversions.whatsapp-pending', compact('type', 'firNo', 'ncrpId'));
     }
 
     public function generateRequest($type, Request $request)
     {
-        return view('pages.fir-conversions.generate-request', compact('type'));
+        $firNo = $request->firNo;
+        $ncrpId = $request->requestId;
+        return view('pages.fir-conversions.generate-request', compact('type', 'firNo', 'ncrpId'));
     }
 
     public function saveGenerateRequest(Request $request)
@@ -210,22 +215,45 @@ class FIRConversionsController extends Controller
         if (!isset($request->email)) {
             return redirect()->back()->with('error', 'Email is required');
         }
-
+        $requestData = $request->all();
+        // dd($requestData);
         $status = false;
         if ($request->type == 'cdr') {
             $status = true;
             Mail::to($request->email)->send(new CDRGenerateRequestMail());
         } elseif ($request->type == 'whatsapp') {
+            $data = DB::table('Cyber_Crime_Info')
+                ->select('Cyber_Crime_Info.*')
+                ->whereRaw("CONCAT(Cyber_Crime_Info.FIR_NO, '/', Cyber_Crime_Info.YEAR) = ?", [$requestData['firNo']])->first();
+            // dd($data);
             $status = true;
-            Mail::to($request->email)->send(new WhatsAppRequestMail());
+            Mail::to($request->email)->send(new WhatsAppRequestMail($data));
         } elseif ($request->type == 'soa') {
+            $data =
+                $this->totalPoh
+                ->leftJoin('Sample_Additional_Information', 'Sample_Total_POH.NCRP Ack No ', 'Sample_Additional_Information.Acknowledgement_No')
+                ->leftJoin('FIR_Conversions', 'FIR_Conversions.Acknowledgement_No', 'Sample_Total_POH.NCRP Ack No ')
+                ->leftJoin('Sample_layer_Accounts', 'Sample_layer_Accounts.Acknowledgement No ', 'Sample_Total_POH.NCRP Ack No ')
+                ->select(
+                    'Sample_layer_Accounts.Account No  as Account_No',
+                    'Sample_layer_Accounts.IFSC Code as IFSC_Code',
+                    'FIR_Conversions.FIR_NO',
+                    'FIR_Conversions.Acknowledgement_No',
+                    'Sample_Total_POH.Bank'
+                )
+                ->where('FIR_Conversions.Acknowledgement_No', $requestData['ncrpId'])->first()->toArray();
+            $data['requestData'] = $requestData;
+            // $requestData = $data['requestData'];
+            // return view('emails.generate-request', compact('data', 'requestData'));
             $status = true;
-            Mail::to($request->email)->send(new GenerateRequestMail()); // send email
+            Mail::to($request->email)->send(new GenerateRequestMail($data)); // send email
         }
+
 
         if (!$status) {
             return redirect()->back()->with('failed', 'Invalid request to send email.');
         }
+
         return redirect()->back()->with('success', 'Email Sent Successfully!');
     }
 }

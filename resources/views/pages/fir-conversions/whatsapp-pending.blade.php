@@ -29,7 +29,7 @@
                     <td data-label="HANDLE">2344</td>
                     <td data-label="DATE Of REQUEST">23-07-2024</td>
                     <td data-label="GENERATE REMINDER">
-                        <a href="{{ route('fir-conversions.generate-request', ['type' => $type, 'requestId' => 23]) }}"
+                        <a href="{{ route('fir-conversions.generate-request', ['type' => $type, 'requestId' => $ncrpId, 'firNo' => $firNo]) }}"
                             class="genera-button">GENERATE REQUEST</a>
                     </td>
                 </tr>

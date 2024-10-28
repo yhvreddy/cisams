@@ -30,26 +30,26 @@
                 <tr>
                     <td data-label="S.No"> 1</td>
                     <td data-label="CDR/CAF">
-                        <a href="{{ route('fir-conversions.whatsapp-pending', ['type' => 'cdr']) }}"
+                        <a href="{{ route('fir-conversions.whatsapp-pending', ['type' => 'cdr', 'firNo' => $firNo, 'ncrpId' => $ncrpId]) }}"
                             class="borderr-button">No</a>
                     </td>
                     <td data-label="IPDR">
-                        <a href="{{ route('fir-conversions.whatsapp-pending', ['type' => 'ipdr']) }}"
+                        <a href="{{ route('fir-conversions.whatsapp-pending', ['type' => 'ipdr', 'firNo' => $firNo, 'ncrpId' => $ncrpId]) }}"
                             class="borderr-button">No</a>
                     </td>
                     <td data-label="WHATSAPP">
-                        <a href="{{ route('fir-conversions.whatsapp-pending', ['type' => 'whatsapp']) }}"
+                        <a href="{{ route('fir-conversions.whatsapp-pending', ['type' => 'whatsapp', 'firNo' => $firNo, 'ncrpId' => $ncrpId]) }}"
                             class="borderr-button">No</a>
                     </td>
                     <td data-label="SM HANDLES">
                         <btn class="borderr-button">No</btn>
                     </td>
                     <td data-label="KYC">
-                        <a href="{{ route('fir-conversions.whatsapp-pending', ['type' => 'kyc']) }}"
+                        <a href="{{ route('fir-conversions.whatsapp-pending', ['type' => 'kyc', 'firNo' => $firNo, 'ncrpId' => $ncrpId]) }}"
                             class="borderr-button">No</a>
                     </td>
                     <td data-label="BANK STATEMENTS">
-                        <a href="{{ route('fir-conversions.whatsapp-pending', ['type' => 'soa']) }}"
+                        <a href="{{ route('fir-conversions.whatsapp-pending', ['type' => 'soa', 'firNo' => $firNo, 'ncrpId' => $ncrpId]) }}"
                             class="borderr-button">No</a>
                     </td>
 

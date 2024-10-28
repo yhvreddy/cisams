@@ -19,8 +19,7 @@
                     <strong style="font-size: 14px;color:#0070c0;font-style: italic;">HYDERABAD</strong>
                 </td>
                 <td style="vertical-align: middle;">
-                    <img src="{{ url('/assets/emails/logo.jpg') }}" alt="Logo"
-                        style="width: 115px; height: 104px;" />
+                    <img src="{{ $logo }}" alt="Logo" style="width: 115px; height: 104px;" />
                 </td>
                 <td style="text-align: right;vertical-align: middle;line-height: 1.2;">
                     <strong style="font-size: 14px;color:#0070c0;font-style: italic;">TELANGANA
@@ -38,7 +37,7 @@
 
         <h2 style="text-align: center; font-size: 14px; font-weight: bold; margin-bottom: 0px;margin-top: 0;">
             <span style="border-bottom: 1px solid #333;">Notice U/s 94 - THE
-                BHARATIYA NAGARIK SURAKSHA SANHITA, 2023</span>
+                BHARATIYA NAGARIK SURAKSHA SANHITA, {{ date('Y') }}</span>
         </h2>
 
         <table style="width: 100%;">
@@ -46,11 +45,11 @@
                 <td>
                     <span
                         style="color: #606060;font-size: 14px;font-size: italic;font-weight: bold;">C.No.639/TGCSB-CCPS
-                        /2024</span>
+                        /{{ date('Y') }}</span>
                 </td>
                 <td style="text-align: right;">
                     <span style="color: #606060;font-size: 14px;font-size: italic;font-weight: bold;">Date:
-                        20-08-2024</span>
+                        {{ date('d-m-Y') }}</span>
                 </td>
             </tr>
         </table>
@@ -59,7 +58,7 @@
             <p style="font-family: Bookman Old Style, sans-serif; line-height: 1.3;color: #333;font-size: 14px; ">
                 To<br>
                 The Nodal Officer,<br>
-                Axis Bank.
+                {{ $requestData['bankName'] ?? ($data['Bank'] ?? '-') }}.
             </p>
 
             <p
@@ -79,7 +78,7 @@
                     - </strong> Acknowledgement numbers of complaints
                 registered on the National
                 Cyber Crime Reporting Portal <strong>(NCRP) / FIR No.
-                    27/2024 CCPS HQ.</strong>
+                    {{ $data['FIR_NO'] ?? ($data['Acknowledgement_No'] ?? '-') }}.</strong>
             </p>
             <div style="text-align: center;font-size: 14px;color: #000;">***</div>
 
@@ -96,7 +95,7 @@
             <p
                 style="font-family: Bookman Old Style, sans-serif; line-height: 1.3;color: #000;font-size: 16px; text-indent: 60px;margin-top: 0;">
                 <strong>Account
-                    No.(s): - &nbsp;&nbsp; 924010039365840</strong>
+                    No.(s): - &nbsp;&nbsp; {{ $data['Account_No'] ?? '-' }}</strong>
             </p>
 
             <div>

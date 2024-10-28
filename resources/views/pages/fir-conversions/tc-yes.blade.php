@@ -37,7 +37,8 @@
                         </td>
                         <td data-label="EVIDENCE GATHERED">
                             @if (in_array($cyberCrime->FIR_STATUS, [null, 'New', '']))
-                                <a href="{{ route('fir-conversions.ev-no') }}" class="borderr-button">No</a>
+                                <a href="{{ route('fir-conversions.ev-no', ['firNo' => $firNo, 'ncrpId' => $ncrpId]) }}"
+                                    class="borderr-button">No</a>
                             @else
                                 <btn class="border-button">Yes</btn>
                             @endif

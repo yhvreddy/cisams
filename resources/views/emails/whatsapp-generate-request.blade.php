@@ -19,8 +19,7 @@
                     <strong style="font-size: 14px;color:#0070c0;font-style: italic;">HYDERABAD</strong>
                 </td>
                 <td style="vertical-align: middle;">
-                    <img src="{{ url('/assets/emails/logo.jpg') }}" alt="Logo"
-                        style="width: 115px; height: 104px;" />
+                    <img src="{{ $logo }}" alt="Logo" style="width: 115px; height: 104px;" />
                 </td>
                 <td style="text-align: right;vertical-align: middle;line-height: 1.2;">
                     <strong style="font-size: 14px;color:#0070c0;font-style: italic;">TELANGANA
@@ -38,11 +37,12 @@
             <tr>
                 <td>
                     <span style="color: #606060;font-size: 14px;font-size: italic;font-weight: bold;">L.No.
+                        {{ $data->CRIME_ID ?? '' }}
                     </span>
                 </td>
                 <td style="text-align: right;">
                     <span style="color: #606060;font-size: 14px;font-size: italic;font-weight: bold;">Date:
-                        20-08-2024</span>
+                        {{ date('d-m-Y') }}</span>
                 </td>
             </tr>
         </table>
@@ -73,7 +73,8 @@
             <p
                 style="font-family: Bookman Old Style, sans-serif; line-height: 1.3;color: #333;font-size: 14px; text-indent: 60px;margin-top: 0;margin-bottom: 0;">
                 <strong>Ref:
-                    - </strong> FIR NO.227/2024 of CCPS, Hyderabad Commissionerate U/s 419, 420 IPC, 66C, 66D ITA
+                    - </strong> FIR NO. {{ ($data->FIR_NO ?? '') . '/' . ($data->YEAR ?? '') }} of CCPS, Hyderabad
+                Commissionerate U/s {{ $data->SEC_OF_LAW ?? '' }}
                 Act-2008.</strong>
             </p>
             <div style="text-align: center;font-size: 14px;color: #000;">***</div>
