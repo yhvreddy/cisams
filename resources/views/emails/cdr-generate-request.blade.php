@@ -36,7 +36,7 @@
                     <span style="color: #000;font-size: 14px;line-height: 1;">CCPS(HQRS)
                         TGCSB</span><br>
                     <span style="color: #000;font-size: 14px;line-height: 1;">Date:
-                        13.06.2024</span>
+                        {{ date('d.m.Y') }}</span>
 
                 </td>
             </tr>
@@ -68,7 +68,7 @@
             <p
                 style="font-family: Bookman Old Style, sans-serif; line-height: 1.3;color: #333;font-size: 14px; text-indent: 60px;margin-top: 0;">
                 <strong>Ref:
-                    - </strong> Cr. No. 10/2024, U/s 419,420,467 IPC and 66(D) IT Act.
+                    - </strong> Cr. No. {{ $crimeInfo->SEC_OF_LAW ?? '-' }}.
             </p>
 
 
@@ -109,10 +109,10 @@
                     <td>13.06.2024</td>
                     <td>-</td>
                     <td>-</td>
-                    <td>10/2024</td>
-                    <td>2024</td>
-                    <td>CCPS HQRS</td>
-                    <td>U/s 419,420,467 IPC and 66(D) IT Act.</td>
+                    <td>{{ $crimeInfo->CRIME_ID ?? $data['FIR_NO'] }}</td>
+                    <td>{{ $crimeInfo->YEAR ?? '-' }}</td>
+                    <td>{{ $data['Police_Station'] ?? ($data['Police Station'] ?? '-') }}</td>
+                    <td>{{ $crimeInfo->SEC_OF_LAW ?? '-' }}</td>
                     <td>Trading</td>
                     <td></td>
                     <td>Mentioned below</td>

@@ -219,8 +219,25 @@ class FIRConversionsController extends Controller
         // dd($requestData);
         $status = false;
         if ($request->type == 'cdr') {
+            $data =
+                $this->totalPoh
+                ->leftJoin('Sample_Additional_Information', 'Sample_Total_POH.NCRP Ack No ', 'Sample_Additional_Information.Acknowledgement_No')
+                ->leftJoin('FIR_Conversions', 'FIR_Conversions.Acknowledgement_No', 'Sample_Total_POH.NCRP Ack No ')
+                ->leftJoin('Sample_layer_Accounts', 'Sample_layer_Accounts.Acknowledgement No ', 'Sample_Total_POH.NCRP Ack No ')
+                ->where('FIR_Conversions.Acknowledgement_No', $requestData['ncrpId'])->first()->toArray();
+            $crimeInfo =
+                DB::table('Cyber_Crime_Info')
+                ->select('Cyber_Crime_Info.*')
+                ->whereRaw("CONCAT(Cyber_Crime_Info.FIR_NO, '/', Cyber_Crime_Info.YEAR) = ?", [$requestData['firNo']])->first();
+            $data['crimeInfo'] = $crimeInfo;
+            $data['requestData'] = $requestData;
+
+            // $requestData = $data['requestData'];
+            // $crimeInfo = $data['crimeInfo'];
+            // return view('emails.cdr-generate-request', compact('data', 'requestData', 'crimeInfo'));
+            // dd($data);
             $status = true;
-            Mail::to($request->email)->send(new CDRGenerateRequestMail());
+            Mail::to($request->email)->send(new CDRGenerateRequestMail($data));
         } elseif ($request->type == 'whatsapp') {
             $data = DB::table('Cyber_Crime_Info')
                 ->select('Cyber_Crime_Info.*')
@@ -248,7 +265,6 @@ class FIRConversionsController extends Controller
             $status = true;
             Mail::to($request->email)->send(new GenerateRequestMail($data)); // send email
         }
-
 
         if (!$status) {
             return redirect()->back()->with('failed', 'Invalid request to send email.');
