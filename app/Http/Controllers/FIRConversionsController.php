@@ -135,12 +135,26 @@ class FIRConversionsController extends Controller
         } elseif ($listType == 'fir-converted') {
             $firConversionListing
                 ->whereIn('Sample_Total_POH.status', ['Registered', 'FIR Registered']);
-            $firConversionListing = $firConversionListing->paginate(20);
+
+            if (isset(request()->search) && !empty(request()->search)) {
+                $firConversionListing->where('Sample_Total_POH.S No', 'LIKE', '%' . request()->search . '%')
+                    ->orWhere('Sample_Total_POH.NCRP Ack No ', 'LIKE', '%' . request()->search . '%');
+            }
+            $firConversionListing = $firConversionListing->paginate(50);
             $listName = 'FIR Converted';
             return view('pages.fir-conversions.fir_converted_list', compact('firConversionListing', 'listName', 'district', 'listType', 'basedOn'));
         }
 
-        $firConversionListing = $firConversionListing->paginate(20);
+        if (isset(request()->search) && !empty(request()->search)) {
+            $firConversionListing->where('Sample_Total_POH.S No', 'LIKE', '%' . request()->search . '%')
+                ->orWhere('Sample_Total_POH.NCRP Ack No ', 'LIKE', '%' . request()->search . '%')
+                ->orWhere('FIR_Conversions.FIR_NO', 'LIKE', '%' . request()->search . '%')
+                ->orWhere('Sample_Additional_Information.Complaint_Date', 'LIKE', '%' . request()->search . '%')
+                ->orWhere('Sample_Additional_Information.Category', 'LIKE', '%' . request()->search . '%');
+        }
+
+
+        $firConversionListing = $firConversionListing->paginate(50);
         return view('pages.fir-conversions.list', compact('firConversionListing', 'listName', 'district', 'listType', 'basedOn'));
     }
 
@@ -150,9 +164,13 @@ class FIRConversionsController extends Controller
         $ncrpId = $request->ncrpId;
         $cyberCrimeInfo = DB::table('Cyber_Crime_Info')
             ->select('Cyber_Crime_Info.*')
-            ->whereRaw("CONCAT(Cyber_Crime_Info.FIR_NO, '/', Cyber_Crime_Info.YEAR) = ?", [$request->FIR_NO])
-            // ->orderBy('Cyber_Crime_Info.FIR_ID', 'DESC')
-            ->get();
+            ->whereRaw("CONCAT(Cyber_Crime_Info.FIR_NO, '/', Cyber_Crime_Info.YEAR) = ?", [$request->FIR_NO]);
+
+        if (isset(request()->search) && !empty(request()->search)) {
+            $cyberCrimeInfo->where('SEC_OF_LAW', 'LIKE', '%' . request()->search . '%');
+        }
+
+        $cyberCrimeInfo = $cyberCrimeInfo->get();
 
         if (!$cyberCrimeInfo->count()) {
             return redirect()->back()->with('error', 'FIR Not Found');

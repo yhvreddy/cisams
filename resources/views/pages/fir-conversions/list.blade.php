@@ -11,6 +11,27 @@
         <h4 class="fir-head">{{ $listName }} - FIR Conversions</h4>
 
         <div class="container">
+
+            <div>
+                <form method="GET">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="search" id="search"
+                                    placeholder="Search..." />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <button type="submit" class="btn-submit">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
             <table class="table">
                 <thead class="rounded-header">
                     <tr>

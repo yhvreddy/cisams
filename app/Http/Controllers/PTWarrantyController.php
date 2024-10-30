@@ -145,8 +145,13 @@ class PTWarrantyController extends Controller
             $listingData->where('PT_EXECUTED', 'No');
         }
 
-        $listingData = $listingData->paginate(20);
+        if (isset(request()->search) && !empty(request()->search)) {
+            $listingData->where('ACCUSED_NAME', 'LIKE', '%' . request()->search . '%')
+                ->orWhere('FIR_NO', 'LIKE', '%' . request()->search . '%')
+                ->orWhere('ARRESTED_CRIME', 'LIKE', '%' . request()->search . '%');
+        }
 
+        $listingData = $listingData->paginate(50);
         return view('pages.pt-warranty.districts_data', compact('listingData', 'district', 'typeName', 'type'));
     }
 }

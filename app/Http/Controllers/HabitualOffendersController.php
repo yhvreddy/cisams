@@ -53,8 +53,14 @@ class HabitualOffendersController extends Controller
     {
         $habitualOffenders  = $this->cyberAccuPersonalData
             ->where('PERSON_STATE', ($state ?? 'Telangana'))
-            ->where('PERSON_DISTRICT', $district)
-            ->paginate(100);
+            ->where('PERSON_DISTRICT', $district);
+        if (isset(request()->search) && !empty(request()->search)) {
+            $habitualOffenders->where('ACCUSED_NO', 'LIKE', '%' . request()->search . '%')
+                ->orWhere('FULNAME', 'LIKE', '%' . request()->search . '%')
+                ->orWhere('fir_reg_num', 'LIKE', '%' . request()->search . '%');
+        }
+
+        $habitualOffenders = $habitualOffenders->paginate(100);
         return view('pages.habitual-offenders.list', compact('state', 'district', 'habitualOffenders'));
     }
 }
