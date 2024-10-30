@@ -60,7 +60,7 @@ class HabitualOffendersController extends Controller
                 ->orWhere('fir_reg_num', 'LIKE', '%' . request()->search . '%');
         }
 
-        $habitualOffenders = $habitualOffenders->paginate(100);
+        $habitualOffenders = $habitualOffenders->paginate(50);
         return view('pages.habitual-offenders.list', compact('state', 'district', 'habitualOffenders'));
     }
 }
