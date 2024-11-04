@@ -406,103 +406,112 @@
     <div class="row">
         <div class="col-md-4 box">
             <h5 class="titl">Case Status</h5>
-            <a href='{{ route('case-status.pe') }}'> <canvas id="uniqueCaseStatusChart" height="240"></canvas>
-                <script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                        const ctx = document.getElementById('uniqueCaseStatusChart').getContext('2d');
-                        const uniqueCaseStatusChart = new Chart(ctx, {
-                            type: 'bar',
-                            data: {
-                                labels: [
-                                    'Pending\nArrest',
-                                    'Pending\nChargesheet',
-                                    'Charged',
-                                    'Under\nTrial',
-                                    'Closed'
-                                ],
-                                datasets: [
-                                    // {
-                                    //     label: 'Pending Evidence',
-                                    //     data: [0, 0, 0, 0, 0, 0],
-                                    //     backgroundColor: '#1F3C88'
-                                    // },
-                                    {
-                                        label: 'Pending Arrest',
-                                        data: [{{ $cyberCrimeInfo->pending_arrest }}, 0, 0, 0, 0],
-                                        backgroundColor: '#A3BFFA'
+            <canvas id="uniqueCaseStatusChart" height="240"></canvas>
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const ctx = document.getElementById('uniqueCaseStatusChart').getContext('2d');
+
+                    const cyberCrimeInfoLinks = {!! json_encode($cyberCrimeInfoLinks) !!}; // Links from backend
+
+                    const uniqueCaseStatusChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: [
+                                'Pending\nArrest',
+                                'Pending\nChargesheet',
+                                'Charged',
+                                'Under\nTrial',
+                                'Closed'
+                            ],
+                            datasets: [
+                                // {
+                                //     label: 'Pending Evidence',
+                                //     data: [0, 0, 0, 0, 0, 0],
+                                //     backgroundColor: '#1F3C88'
+                                // },
+                                {
+                                    label: 'Pending Arrest',
+                                    data: [{{ $cyberCrimeInfo->pending_arrest }}, 0, 0, 0, 0],
+                                    backgroundColor: '#A3BFFA'
+                                },
+                                {
+                                    label: 'Pending Chargesheet',
+                                    data: [0, {{ $cyberCrimeInfo->pending_chargesheet }}, 0, 0, 0],
+                                    backgroundColor: '#7396FF'
+                                },
+                                {
+                                    label: 'Charged',
+                                    data: [0, 0, {{ $cyberCrimeInfo->charged }}, 0, 0],
+                                    backgroundColor: '#7080FF'
+                                },
+                                {
+                                    label: 'Under Trial',
+                                    data: [0, 0, 0, {{ $cyberCrimeInfo->under_trial }}, 0],
+                                    backgroundColor: '#A9B6FF'
+                                },
+                                {
+                                    label: 'Closed',
+                                    data: [0, 0, 0, 0, {{ $cyberCrimeInfo->closed }}],
+                                    backgroundColor: '#A8AEDB'
+                                }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                x: {
+                                    ticks: {
+                                        autoSkip: false,
+                                        font: {
+                                            size: 12, // Smaller font size for labels
+                                            family: 'Red Hat Display'
+                                        }
                                     },
-                                    {
-                                        label: 'Pending Chargesheet',
-                                        data: [0, {{ $cyberCrimeInfo->pending_chargesheet }}, 0, 0, 0],
-                                        backgroundColor: '#7396FF'
+                                    grid: {
+                                        display: false // Optionally hide grid lines on x-axis
                                     },
-                                    {
-                                        label: 'Charged',
-                                        data: [0, 0, {{ $cyberCrimeInfo->charged }}, 0, 0],
-                                        backgroundColor: '#7080FF'
-                                    },
-                                    {
-                                        label: 'Under Trial',
-                                        data: [0, 0, 0, {{ $cyberCrimeInfo->under_trial }}, 0],
-                                        backgroundColor: '#A9B6FF'
-                                    },
-                                    {
-                                        label: 'Closed',
-                                        data: [0, 0, 0, 0, {{ $cyberCrimeInfo->closed }}],
-                                        backgroundColor: '#A8AEDB'
+                                    barThickness: 80, // Set the bar thickness to 50px
+                                    maxBarThickness: 90 // Limit the maximum bar thickness to 60px
+                                },
+                                y: {
+                                    beginAtZero: true,
+                                    max: "{{ $cyberCrimeInfoMaxCount + 10 }}",
+                                    ticks: {
+                                        stepSize: 12
                                     }
-                                ]
+                                }
                             },
-                            options: {
-                                scales: {
-                                    x: {
-                                        ticks: {
-                                            autoSkip: false,
-                                            font: {
-                                                size: 12, // Smaller font size for labels
-                                                family: 'Red Hat Display'
-                                            }
-                                        },
-                                        grid: {
-                                            display: false // Optionally hide grid lines on x-axis
-                                        },
-                                        barThickness: 80, // Set the bar thickness to 50px
-                                        maxBarThickness: 90 // Limit the maximum bar thickness to 60px
-                                    },
-                                    y: {
-                                        beginAtZero: true,
-                                        max: "{{ $cyberCrimeInfoMaxCount + 10 }}",
-                                        ticks: {
-                                            stepSize: 12
+                            onClick: (event, elements) => {
+                                if (elements.length > 0) {
+                                    const index = elements[0].index;
+                                    const statusTypes = ['pending_arrest', 'pending_chargesheet', 'charged',
+                                        'under_trial', 'closed'
+                                    ];
+                                    const statusType = statusTypes[index];
+                                    if (statusType && cyberCrimeInfoLinks[statusType]) {
+                                        window.open(cyberCrimeInfoLinks[statusType], '_blank');
+                                    }
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    display: true,
+                                    position: 'top',
+                                    align: 'end',
+                                    labels: {
+                                        usePointStyle: true,
+                                        color: '#000',
+                                        font: {
+                                            size: 12
                                         }
                                     }
-                                },
-                                plugins: {
-                                    legend: {
-                                        display: true,
-                                        position: 'top',
-                                        align: 'end',
-                                        labels: {
-                                            usePointStyle: true,
-                                            color: '#000',
-                                            font: {
-                                                size: 12
-                                            }
-                                        }
-                                    }
-                                },
-                                maintainAspectRatio: false,
-                                responsive: true
-                            }
-                        });
+                                }
+                            },
+                            maintainAspectRatio: false,
+                            responsive: true
+                        }
                     });
-                </script>
-
-            </a>
-
-
-
-
+                });
+            </script>
         </div>
 
         <div class="col-md-4 box">

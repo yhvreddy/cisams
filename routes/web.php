@@ -51,7 +51,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         });
 
         Route::prefix('case-status')->name('case-status.')->group(function () {
-            Route::get('/', 'CaseStatusController@index')->name('pe');
+            Route::get('/{statusType?}', 'CaseStatusController@index')->name('pe');
             Route::prefix('pending-evidence')->group(function () {
                 Route::get('/fir-no', 'CaseStatusController@peFirNo')->name('pe-fir-no');
                 Route::get('/fir-kyc', 'CaseStatusController@peFirKyc')->name('pe-fir-kyc');

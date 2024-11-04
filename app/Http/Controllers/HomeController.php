@@ -101,6 +101,7 @@ class HomeController extends Controller
         $graph4Data = $this->graph4Data();
         $cyberCrimeInfo = $graph4Data['cyberCrimeInfo'] ?? [];
         $cyberCrimeInfoMaxCount = $graph4Data['cyberCrimeInfoMaxCount'] ?? [];
+        $cyberCrimeInfoLinks = $graph4Data['cyberCrimeInfoLinks'] ?? [];
 
         // Graph 5
         $ptWarrantCountsJSON = $this->graph5Data();
@@ -108,7 +109,7 @@ class HomeController extends Controller
         // Graph 6
         $refundData = $this->graph6Data();
 
-        return view('pages.home', compact('ptWarrantCountsJSON', 'graphOneCountJson', 'nonFinancialChartJson', 'financialChartJson', 'categoryNamesJson', 'monthDataJson', 'lastThreeMonths', 'firConversionData', 'refundData', 'cyberCrimeInfo', 'cyberCrimeInfoMaxCount'));
+        return view('pages.home', compact('ptWarrantCountsJSON', 'graphOneCountJson', 'nonFinancialChartJson', 'financialChartJson', 'categoryNamesJson', 'monthDataJson', 'lastThreeMonths', 'firConversionData', 'refundData', 'cyberCrimeInfo', 'cyberCrimeInfoMaxCount', 'cyberCrimeInfoLinks'));
     }
 
     public function logout()
@@ -470,6 +471,16 @@ class HomeController extends Controller
         // Get the maximum value
         $cyberCrimeInfoMaxCount = max($cyberCrimeInfoCountsArray);
 
-        return ['cyberCrimeInfo' => $cyberCrimeInfo, 'cyberCrimeInfoMaxCount' => $cyberCrimeInfoMaxCount];
+        // Generate dynamic URLs for each type of status
+        $cyberCrimeInfoLinks = [
+            'pending_arrest' => route('case-status.pe', ['statusType' => 'pending-arrest']),
+            'pending_chargesheet' => route('case-status.pe', ['statusType' => 'pending-chargesheet']),
+            'charged' => route('case-status.pe', ['statusType' => 'charged']),
+            'under_trial' => route('case-status.pe', ['statusType' => 'under-trial']),
+            'closed' => route('case-status.pe', ['statusType' => 'closed']),
+        ];
+
+
+        return ['cyberCrimeInfo' => $cyberCrimeInfo, 'cyberCrimeInfoMaxCount' => $cyberCrimeInfoMaxCount, 'cyberCrimeInfoLinks' => $cyberCrimeInfoLinks];
     }
 }

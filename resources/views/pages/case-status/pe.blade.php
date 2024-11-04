@@ -31,26 +31,30 @@
             </thead>
 
             <tbody class="wht-box ">
-                <tr>
-                    <td data-label="S.No"> 1 </td>
-                    <td data-label="NCRP NO">352534567092</td>
-                    <td data-label="FIR NO"><a href="{{ route('case-status.pe-fir-no') }}"
-                            style="text-decoration: none;">212/2004</a>
-                    </td>
-                    <td data-label="KYC"><a href="{{ route('case-status.pe-fir-kyc') }}"
-                            style="text-decoration: none;">Yes</a></td>
-                    <td data-label="BANk STATEMENTS">No</td>
-                    <td data-label="CDR"><a href="{{ route('case-status.pe-fir-cdr') }}"
-                            style="text-decoration: none;">Yes</a></td>
-                    <td data-label="IPDR">No</td>
-                    <td data-label="WHATSAPP">No</td>
-                    <td data-label="SM HANDLES">No</td>
-                    <td data-label="CAF">No</td>
-                </tr>
-
-                <!-- Repeat rows as needed -->
+                @foreach ($cyberCrimeRecords as $key => $cyberCrimeRecord)
+                    <tr>
+                        <td data-label="S.No"> {{ $key + 1 }} </td>
+                        <td data-label="NCRP NO">{{ $cyberCrimeRecord->ACCUSED_NO }}</td>
+                        <td data-label="FIR NO">
+                            <a href="{{ route('case-status.pe-fir-no') }}" style="text-decoration: none;">
+                                {{ $cyberCrimeRecord->FIR_NO . '/' . $cyberCrimeRecord->YEAR }}
+                            </a>
+                        </td>
+                        <td data-label="KYC"><a href="{{ route('case-status.pe-fir-kyc') }}"
+                                style="text-decoration: none;">Yes</a></td>
+                        <td data-label="BANk STATEMENTS">No</td>
+                        <td data-label="CDR"><a href="{{ route('case-status.pe-fir-cdr') }}"
+                                style="text-decoration: none;">Yes</a></td>
+                        <td data-label="IPDR">No</td>
+                        <td data-label="WHATSAPP">No</td>
+                        <td data-label="SM HANDLES">No</td>
+                        <td data-label="CAF">No</td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
+
+        {{ $cyberCrimeRecords->links('vendor.pagination.custom-pagination') }}
     </div>
 @endsection
 

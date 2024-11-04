@@ -22,13 +22,18 @@
                 @endif
             @endif
 
-            <a href="{{ $routeLink ?? route('home') }}" class="btn-back" onclick="history.back()">
-                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="12" fill="currentColor"
-                    class="bi bi-arrow-left" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd"
-                        d="M15 8a.5.5 0 0 1-.5.5H3.707l4.147 4.146a.5.5 0 0 1-.708.708l-5-5a.5.5 0 0 1 0-.708l5-5a.5.5 0 1 1 .708.708L3.707 7.5H14.5A.5.5 0 0 1 15 8z" />
-                </svg> Back
-            </a>
+            {{-- <a href="{{  ??  }}" onclick="history.back()"></a> --}}
+
+
+            @if (url()->previous() && url()->previous() !== url()->current())
+                <a href="{{ $routeLink ?? (url()->previous() ?? route('home')) }}" class="btn-back">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="12" fill="currentColor"
+                        class="bi bi-arrow-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M15 8a.5.5 0 0 1-.5.5H3.707l4.147 4.146a.5.5 0 0 1-.708.708l-5-5a.5.5 0 0 1 0-.708l5-5a.5.5 0 1 1 .708.708L3.707 7.5H14.5A.5.5 0 0 1 15 8z" />
+                    </svg> Back
+                </a>
+            @endif
         </div>
     </div>
 </div>
