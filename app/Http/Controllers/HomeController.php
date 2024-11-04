@@ -469,7 +469,7 @@ class HomeController extends Controller
         ];
 
         // Get the maximum value
-        $cyberCrimeInfoMaxCount = max($cyberCrimeInfoCountsArray);
+        $cyberCrimeInfoMaxCount = round(max($cyberCrimeInfoCountsArray));
 
         // Generate dynamic URLs for each type of status
         $cyberCrimeInfoLinks = [
