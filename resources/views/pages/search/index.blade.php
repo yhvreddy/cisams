@@ -18,12 +18,12 @@
                 <!-- Radio Buttons -->
                 <div class="radio-group">
                     <label>
-                        <input type="radio" name="option" value="Either of Following Combinations" checked> Either of
+                        <input type="radio" name="option" value="link" checked> Either of
                         Following
                         Combinations&nbsp;&nbsp;&nbsp;&nbsp; <B>or</B>&nbsp;&nbsp;&nbsp;&nbsp;
                     </label>
                     <label>
-                        <input type="radio" name="option" value="All Combinations"> All Combinations
+                        <input type="radio" name="option" value="all"> All Combinations
                     </label>
                 </div>
 
@@ -31,11 +31,11 @@
                 <div class="form-horizontal">
                     <div class="form-group">
                         <label for="account-no">Account No</label>
-                        <input type="text" id="account-no" name="account-no" placeholder="Enter your account number">
+                        <input type="text" id="account-no" name="account_no" placeholder="Enter your account number">
                     </div>
                     <div class="form-group">
                         <label for="mobile-no">Mobile No</label>
-                        <input type="tel" id="mobile-no" name="mobile-no" placeholder="Enter your mobile number">
+                        <input type="tel" id="mobile-no" name="mobile_no" placeholder="Enter your mobile number">
                     </div>
                     {{-- <div class="form-group">
                     <label for="url">URL</label>
@@ -43,7 +43,7 @@
                 </div> --}}
                     <div class="form-group">
                         <label for="sm-id">SM ID</label>
-                        <input type="text" id="sm-id" name="sm-id" placeholder="Enter your sm id">
+                        <input type="text" id="sm-id" name="sm_id" placeholder="Enter your sm id">
                     </div>
                 </div>
 
@@ -87,8 +87,8 @@
                             <td>{{ $data->Police_Station ?? '-' }}</td>
                             <td>{{ $data->District ?? '-' }}</td>
                             <td>{{ $data->State ?? '-' }}</td>
-                            <td>{{ '-' }}</td>
-                            <td>{{ '-' }}</td>
+                            <td>{{ $data->ACCU_BANK_ACCOUNT ?? '-' }}</td>
+                            <td>{{ $data->ACCU_PHONE ?? '-' }}</td>
                             <td>{{ '-' }}</td>
                         </tr>
                     @endforeach
