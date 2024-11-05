@@ -100,7 +100,7 @@ class HomeController extends Controller
         // Graph 4
         $graph4Data = $this->graph4Data();
         $cyberCrimeInfo = $graph4Data['cyberCrimeInfo'] ?? [];
-        $cyberCrimeInfoMaxCount = $graph4Data['cyberCrimeInfoMaxCount'] ?? [];
+        $cyberCrimeInfoMaxCount = $graph4Data['cyberCrimeInfoMaxCount'] ?? 500;
         $cyberCrimeInfoLinks = $graph4Data['cyberCrimeInfoLinks'] ?? [];
 
         // Graph 5

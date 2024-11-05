@@ -491,7 +491,7 @@
                                     },
                                     y: {
                                         beginAtZero: true,
-                                        max: "{{ $cyberCrimeInfoMaxCount + 10 }}",
+                                        max: Math.trunc("{{ $cyberCrimeInfoMaxCount }}"),
                                         ticks: {
                                             stepSize: 12
                                         }
