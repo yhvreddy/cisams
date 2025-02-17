@@ -22,18 +22,19 @@ class HabitualOffendersController extends Controller
     {
         $districtData = $this->cyberAccuPersonalData
             ->select('PERSON_DISTRICT', DB::raw('count(*) as total'))
-            ->where('PERSON_STATE', 'Telangana')
+            ->where('PERSON_STATE', '36')
             ->whereNotNull('PERSON_DISTRICT')
             ->where('PERSON_DISTRICT', '!=', '0')  // Compare 'PERSON_DISTRICT' with string '0'
             ->groupBy('PERSON_DISTRICT')
             ->get();
+
         $labels = $districtData->pluck('PERSON_DISTRICT');
         $data = $districtData->pluck('total');
 
         // Generate dynamic URLs for each district
         $urls = $districtData->map(function ($district) {
             return route('habitual.list', [
-                'state' => 'Telangana',
+                'state' => '36',
                 'district' => $district->PERSON_DISTRICT
             ]);
         });
